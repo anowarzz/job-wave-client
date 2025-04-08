@@ -1,8 +1,11 @@
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import registerLottieData from "../../assets/lottie/register.json";
+import AuthContext from "../../context/AuthContext/AuthContext";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+
   const [error, setError] = useState("");
 
   const handleRegister = (e) => {
@@ -31,13 +34,22 @@ const Register = () => {
       return;
     }
 
-    // handle register logic here
+    // Registering a new user
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log("User registered successfully:", user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     console.log("Registering with email:", email, "and password:", password);
   };
 
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
+    <div className="hero bg-base-200 min-h-screen mx-auto">
+      <div className="hero-content flex-col lg:flex-row-reverse lg:justify-around">
         <div className="text-center lg:text-left w-96 lg:w-1/3">
           <Lottie animationData={registerLottieData}> </Lottie>
         </div>
