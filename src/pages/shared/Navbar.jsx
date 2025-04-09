@@ -50,7 +50,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end flex gap-3">
         <Link to="/register">Register</Link>
-        <Link to="/login">Login</Link>
+        <Link to="/signIn">Login</Link>
       </div>
     </div>
   );
