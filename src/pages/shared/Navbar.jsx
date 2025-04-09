@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import jobIcon from "../../assets/icons/job-icon-96.png";
 import AuthContext from "../../context/AuthContext/AuthContext";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
-
 
   // SignOut a user
   const handleSignOutUser = () => {
@@ -20,11 +20,16 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <a>Item 1</a>
+        <NavLink to="/">Home</NavLink>{" "}
       </li>
-
       <li>
-        <a>Item 3</a>
+        <NavLink to="/">Home</NavLink>{" "}
+      </li>
+      <li>
+        <NavLink to="/">Home</NavLink>{" "}
+      </li>
+      <li>
+        <NavLink to="/">Home</NavLink>{" "}
       </li>
     </>
   );
@@ -57,8 +62,16 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">
-          Job Wave
+        <Link
+          to="/"
+          className="btn btn-ghost text-xl flex justify-center items-center "
+        >
+          <img
+            src={jobIcon}
+            alt="Job Wave"
+            className="w-10 h-10 lg:w-14 lg:h-14"
+          />
+          <h3 className="text xl: md:text-2xl lg:text-3xl">Job Wave</h3>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
