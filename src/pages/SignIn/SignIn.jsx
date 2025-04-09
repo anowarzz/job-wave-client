@@ -17,18 +17,24 @@ const SignIn = () => {
 
     console.log(email, password);
 
-  // SignIn a existing user  
+    // SignIn a existing user
     signInUser(email, password)
       .then((result) => {
         const user = result.user;
         console.log("User signed in successfully:", user);
       })
       .catch((error) => {
-        console.log(error);
-        setError(error.message);
-      });
+        console.log(error.code, error.message);
+        // set the error message only the meaning full error message provided by firebase
 
-    
+        if (error.code === "auth/user-not-found") {
+          setError("User not found. Please register first.");
+        } else if (error.code === "auth/invalid-credential") {
+          setError("Incorrect password. Please try again.");
+        } else {
+          setError("An error occurred. Please try again later.");
+        }
+      });
   };
 
   return (
@@ -59,7 +65,7 @@ const SignIn = () => {
                 <a className="link link-hover">Forgot password?</a>
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <button className="btn btn-neutral mt-4">Register</button>
+              <button className="btn btn-neutral mt-4">Sign In</button>
             </fieldset>
           </form>
         </div>
