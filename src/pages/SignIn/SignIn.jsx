@@ -1,8 +1,11 @@
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import loginLottieData from "../../assets/lottie/login.json";
+import AuthContext from "../../context/AuthContext/AuthContext";
 
 const SignIn = () => {
+  const { signInUser } = useContext(AuthContext);
+
   const [error, setError] = useState("");
 
   const handleSignIn = (e) => {
@@ -12,26 +15,20 @@ const SignIn = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    // Reset error
-    setError("");
+    console.log(email, password);
 
-    // Email Validation
-    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    if (!emailValidation.test(email)) {
-      setError("Please enter a valid email address.");
-      return; // Add this to stop further validation
-    }
+  // SignIn a existing user  
+    signInUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log("User signed in successfully:", user);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
 
-    // Password Validation
-    const passwordValidation = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if (!passwordValidation.test(password)) {
-      setError(
-        "Password must be at least 6 characters long, contain at least one uppercase letter and one number."
-      );
-      return;
-    }
-
-    console.log("Login with email:", email, "and password:", password);
+    
   };
 
   return (
