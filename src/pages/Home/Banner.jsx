@@ -9,9 +9,9 @@ const Banner = () => {
         <div className="flex-1 fle-col justify-center items-center ">
           <motion.img
             src={team1Img}
-            animate={{ y: [20, 100, 20] }}
+            animate={{ y: [20, 60, 20] }}
             transition={{
-              duration: 9,
+              duration: 10,
               ease: "easeInOut",
               repeat: Infinity,
             }}
@@ -23,6 +23,7 @@ const Banner = () => {
             animate={{ x: [100, 150, 100] }}
             transition={{
               duration: 10,
+              delay: 5,
               ease: "easeInOut",
               repeat: Infinity,
             }}

@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import { useContext, useState } from "react";
 import loginLottieData from "../../assets/lottie/login.json";
 import AuthContext from "../../context/AuthContext/AuthContext";
+import SocialLogin from "../shared/SocialLogin";
 
 const SignIn = () => {
   const { signInUser } = useContext(AuthContext);
@@ -11,9 +12,18 @@ const SignIn = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
 
+    // Clear any previous errors
+    setError("");
+
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    // set error if email or  pass is empty
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return; // Stop further execution if validation fails
+    }
 
     console.log(email, password);
 
@@ -67,6 +77,7 @@ const SignIn = () => {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <button className="btn btn-neutral mt-4">Sign In</button>
             </fieldset>
+            <SocialLogin setError={setError} />
           </form>
         </div>
       </div>
