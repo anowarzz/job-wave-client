@@ -2,7 +2,7 @@ import jobIcon from "../../assets/icons/job-icon-96.png";
 
 const Footer = () => {
   return (
-    <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+    <footer className="footer sm:footer-horizontal bg-base-200 font-rubik text-base-content p-10">
       <aside>
         <img src={jobIcon} alt="" className="w-18" />
         <p>
