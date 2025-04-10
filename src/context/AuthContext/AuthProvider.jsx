@@ -19,21 +19,34 @@ const AuthProvider = ({ children }) => {
   const [googleLoading, setGoogleLoading] = useState(false);
 
   // Create a new user with email and password
-  const createUser = (email, password) => {
+  const createUser = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password).finally(() => {
-      // This ensures loading state is reset even if there's an error
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return result;
+    } catch (error) {
+      console.log(error.code, error.message);
+    } finally {
+      //  loading state is reset
       setLoading(false);
-    });
+    }
   };
 
   // SignIn user
-  const signInUser = (email, password) => {
+  const signInUser = async (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password).finally(() => {
-      // This ensures loading state is reset even if there's an error
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      return result;
+    } catch (error) {
+      console.log(error.code, error.message);
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   // SignIn with Google
@@ -44,19 +57,22 @@ const AuthProvider = ({ children }) => {
       return result;
     } catch (error) {
       console.log(error.code, error.message);
-      throw error; // Re-throw to allow caller to handle the error
     } finally {
-      // This ensures googleLoading state is reset regardless of success or failure
+      // googleLoading state is reset
       setGoogleLoading(false);
     }
   };
 
   // Logout A User
-  const signOutUser = () => {
+  const signOutUser = async () => {
     setLoading(true);
-    return signOut(auth).finally(() => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log(error.code, error.message);
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   // Observe the user's authentication state
