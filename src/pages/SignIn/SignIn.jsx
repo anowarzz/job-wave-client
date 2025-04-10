@@ -19,7 +19,7 @@ const SignIn = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    // set error if email or  pass is empty
+    // set error if email or pass is empty
     if (!email || !password) {
       setError("Please fill in all fields.");
       return; // Stop further execution if validation fails
@@ -32,10 +32,13 @@ const SignIn = () => {
       .then((result) => {
         const user = result.user;
         console.log("User signed in successfully:", user);
+
+        // Clear the form after successful login
+        form.reset();
       })
       .catch((error) => {
         console.log(error.code, error.message);
-        // set the error message only the meaning full error message provided by firebase
+        // set the error message only the meaningful error message provided by firebase
 
         if (error.code === "auth/user-not-found") {
           setError("User not found. Please register first.");

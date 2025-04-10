@@ -2,6 +2,7 @@ import Lottie from "lottie-react";
 import { useContext, useState } from "react";
 import registerLottieData from "../../assets/lottie/register.json";
 import AuthContext from "../../context/AuthContext/AuthContext";
+import SocialLogin from "../shared/SocialLogin";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
@@ -39,12 +40,21 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         console.log("User registered successfully:", user);
+        // Clear the form after successful registration
+        form.reset();
       })
       .catch((error) => {
         console.log(error);
-      });
 
-    console.log("Registering with email:", email, "and password:", password);
+        // Handle specific Firebase errors
+        if (error.code === "auth/email-already-in-use") {
+          setError("Email is already in use. Please use a different email.");
+        } else if (error.code === "auth/weak-password") {
+          setError("Password is too weak. Please choose a stronger password.");
+        } else {
+          setError("An error occurred during registration. Please try again.");
+        }
+      });
   };
 
   return (
@@ -79,6 +89,7 @@ const Register = () => {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <button className="btn btn-neutral mt-4">Register</button>
             </fieldset>
+            <SocialLogin setError={setError} />
           </form>
         </div>
       </div>

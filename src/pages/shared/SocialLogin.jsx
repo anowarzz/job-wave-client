@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext/AuthContext";
 
 const SocialLogin = ({ setError }) => {
-  const { signInWithGoogle, loading } = useContext(AuthContext);
+  const { signInWithGoogle, googleLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
@@ -23,7 +23,7 @@ const SocialLogin = ({ setError }) => {
         // Set the appropriate error message if setError function is provided
         if (setError) {
           if (error.code === "auth/popup-closed-by-user") {
-            setError("Sign-in was cancelled.");
+            setError("Sign-in with Google was cancelled.");
           } else if (error.code === "auth/network-request-failed") {
             setError("Network error. Please check your connection.");
           } else {
@@ -40,6 +40,7 @@ const SocialLogin = ({ setError }) => {
       <div className="divider">OR</div>
       <button
         onClick={handleGoogleSignIn}
+        disabled={googleLoading}
         className="flex items-center justify-center w-full p-3 border border-gray-300 rounded-md shadow-sm hover:bg-gray-700 transition duration-300"
       >
         <svg
@@ -66,7 +67,7 @@ const SocialLogin = ({ setError }) => {
           />
         </svg>
         <span className="ml-3 font-medium">
-          {loading ? "Signing in..." : "Continue with Google"}
+          {googleLoading ? "Signing in..." : "Continue with Google"}
         </span>
       </button>
     </div>

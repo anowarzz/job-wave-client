@@ -15,38 +15,48 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   // Create a new user with email and password
   const createUser = (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password).finally(() => {
+      // This ensures loading state is reset even if there's an error
+      setLoading(false);
+    });
   };
 
   // SignIn user
   const signInUser = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password).finally(() => {
+      // This ensures loading state is reset even if there's an error
+      setLoading(false);
+    });
   };
 
   // SignIn with Google
   const signInWithGoogle = async () => {
-    setLoading(true);
+    setGoogleLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
       return result;
     } catch (error) {
-      // Reset loading state on error or cancellation
-      setLoading(false);
       console.log(error.code, error.message);
-      
+      throw error; // Re-throw to allow caller to handle the error
+    } finally {
+      // This ensures googleLoading state is reset regardless of success or failure
+      setGoogleLoading(false);
     }
   };
 
   // Logout A User
   const signOutUser = () => {
     setLoading(true);
-    return signOut(auth);
+    return signOut(auth).finally(() => {
+      setLoading(false);
+    });
   };
 
   // Observe the user's authentication state
@@ -54,8 +64,6 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currenUser) => {
       setUser(currenUser);
       console.log("Current user:", currenUser);
-
-      setLoading(false);
     });
 
     return () => {
@@ -70,6 +78,7 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     user,
     loading,
+    googleLoading,
     signInWithGoogle,
   };
 
