@@ -1,9 +1,11 @@
 import Banner from "./Banner";
+import JobsCategoryBrowse from "./JobsCategoryBrowse";
 
 const Home = () => {
   return (
-    <div className=" my-5">
+    <div>
       <Banner />
+      <JobsCategoryBrowse />
     </div>
   );
 };

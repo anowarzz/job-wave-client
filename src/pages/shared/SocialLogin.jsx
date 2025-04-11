@@ -36,7 +36,7 @@ const SocialLogin = ({ setError }) => {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-2">
       <div className="divider">OR</div>
       <button
         onClick={handleGoogleSignIn}
