@@ -130,19 +130,48 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content z-[1] menu p-3 shadow bg-base-100 dark:bg-gray-800 rounded-box w-52 mt-2"
+                  className={`dropdown-content z-[1] menu p-3 shadow rounded-box w-52 mt-2 ${
+                    isDarkMode
+                      ? "bg-gray-800 text-gray-200 border border-gray-700"
+                      : "bg-white text-gray-700 border border-gray-100"
+                  }`}
                 >
-                  <li className="font-semibold text-center mb-2 text-primary">
+                  <li
+                    className={`font-semibold text-center mb-2 ${
+                      isDarkMode ? "text-purple-400" : "text-primary"
+                    }`}
+                  >
                     {user?.displayName}
                   </li>
                   <li>
-                    <Link to="/profile">My Profile</Link>
+                    <Link
+                      to="/profile"
+                      className={`hover:${
+                        isDarkMode ? "bg-gray-700" : "bg-gray-100"
+                      }`}
+                    >
+                      My Profile
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/applied-jobs">Applied Jobs</Link>
+                    <Link
+                      to="/applied-jobs"
+                      className={`hover:${
+                        isDarkMode ? "bg-gray-700" : "bg-gray-100"
+                      }`}
+                    >
+                      Applied Jobs
+                    </Link>
                   </li>
                   <li>
-                    <button onClick={handleSignOutUser}>Logout</button>
+                    <button
+                      onClick={handleSignOutUser}
+                      className={`hover:${
+                        isDarkMode ? "bg-gray-700" : "bg-gray-100"
+                      }`}
+                    >
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -187,7 +216,11 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu menu-sm bg-base-100 dark:bg-gray-800 rounded-box z-[1] mt-3 w-52 p-3 shadow"
+                className={`dropdown-content menu menu-sm rounded-box z-[1] mt-3 w-52 p-3 shadow ${
+                  isDarkMode
+                    ? "bg-gray-800 text-gray-200 border border-gray-700"
+                    : "bg-white text-gray-700 border border-gray-100"
+                }`}
               >
                 {links}
                 {!user && (

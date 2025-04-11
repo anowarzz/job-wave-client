@@ -101,12 +101,9 @@ const JobsCategoryBrowse = () => {
 
   return (
     <div className="relative py-16 overflow-hidden">
-      {/* Restored gradient background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-slate-100/80 to-indigo-50/80 dark:from-gray-900/80 dark:via-slate-900/80 dark:to-indigo-950/80"></div>
 
-      {/* Decorative background elements with enhanced patterns */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        {/* Gradient blob 1 with animation */}
         <div
           className={`absolute -top-32 -left-32 w-96 h-96 rounded-full filter blur-3xl opacity-20 ${
             isDarkMode ? "bg-purple-700" : "bg-primary"
@@ -114,7 +111,6 @@ const JobsCategoryBrowse = () => {
           style={{ animationDuration: "15s" }}
         ></div>
 
-        {/* Gradient blob 2 with animation */}
         <div
           className={`absolute top-1/3 -right-32 w-96 h-96 rounded-full filter blur-3xl opacity-20 ${
             isDarkMode ? "bg-blue-700" : "bg-blue-500"
@@ -122,7 +118,6 @@ const JobsCategoryBrowse = () => {
           style={{ animationDuration: "20s", animationDelay: "2s" }}
         ></div>
 
-        {/* Gradient blob 3 with animation */}
         <div
           className={`absolute -bottom-32 left-1/4 w-96 h-96 rounded-full filter blur-3xl opacity-20 ${
             isDarkMode ? "bg-teal-700" : "bg-teal-500"
@@ -149,19 +144,18 @@ const JobsCategoryBrowse = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2
-            className={`text-4xl font-bold mb-4 ${
-              isDarkMode ? "text-white" : "text-gray-800"
-            } transition-colors bg-gradient-to-r ${
+            className={`text-4xl font-bold mb-4 
+             transition-colors bg-gradient-to-r ${
               isDarkMode
-                ? "from-white via-purple-100 to-white"
-                : "from-gray-400 via-amber-700 to-gray-400"
+                ? "from-gray-200 via-amber-800 to-gray-300"
+                : "from-blue-500  to-indigo-500"
             } bg-clip-text text-transparent`}
           >
             Find Jobs in Popular Categories
           </h2>
           <p
             className={`max-w-2xl mx-auto ${
-              isDarkMode ? "text-gray-300" : "text-gray-200"
+              isDarkMode ? "text-gray-300" : "text-gray-900"
             } transition-colors`}
           >
             Browse job opportunities by categories and find the perfect role
