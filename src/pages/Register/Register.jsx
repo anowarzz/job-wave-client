@@ -64,10 +64,10 @@ const Register = () => {
           <Lottie animationData={registerLottieData}> </Lottie>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <h1 className="ml-8 mt-4 text-4xl font-bold text-center">
+          <h1 className="ml-8 mt-4 text-4xl font-bold text-center font-rubik">
             Register now!
           </h1>
-          <form onSubmit={handleRegister} className="card-body">
+          <form onSubmit={handleRegister} className="card-body font-rubik">
             <fieldset className="fieldset">
               <label className="fieldset-label">Email</label>
               <input

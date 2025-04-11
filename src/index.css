@@ -9,10 +9,25 @@
   --font-poppins: "Poppins", sans-serif;
 }
 
-/* .font-myInter {
-  font-family: var(--font-myInter);
+/* Set Rubik as the default font for the entire application */
+:root {
+  font-family: "Rubik", sans-serif;
 }
 
-.font-myRubik {
-  font-family: var(--font-myRubik);
-} */
+html,
+body {
+  font-family: "Rubik", sans-serif;
+}
+
+/* Class-based font options for when you need to override */
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-rubik {
+  font-family: var(--font-rubik);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}

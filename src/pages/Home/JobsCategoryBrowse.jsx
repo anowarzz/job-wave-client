@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
-    FaBriefcase,
-    FaCalculator,
-    FaChartLine,
-    FaCode,
-    FaGraduationCap,
-    FaMicrophone,
-    FaPaintBrush,
-    FaShoppingBag,
+  FaBriefcase,
+  FaCalculator,
+  FaChartLine,
+  FaCode,
+  FaGraduationCap,
+  FaMicrophone,
+  FaPaintBrush,
+  FaShoppingBag,
 } from "react-icons/fa";
 
 const JobsCategoryBrowse = () => {
@@ -114,11 +114,10 @@ const JobsCategoryBrowse = () => {
   }, []);
 
   return (
-    <div
-      className={`py-16 relative overflow-hidden ${
-        darkMode ? "bg-gray-900" : "bg-gray-50"
-      } transition-colors duration-300`}
-    >
+    <div className="relative py-16 overflow-hidden">
+      {/* Restored gradient background elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-slate-100/80 to-indigo-50/80 dark:from-gray-900/80 dark:via-slate-900/80 dark:to-indigo-950/80"></div>
+
       {/* Decorative background elements with enhanced patterns */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         {/* Gradient blob 1 with animation */}
@@ -198,16 +197,12 @@ const JobsCategoryBrowse = () => {
               className={`p-6 rounded-xl transition-all duration-700 
                  group cursor-pointer z-10 backdrop-blur-sm backdrop-saturate-150
                  hover:z-20 relative ${
-                   darkMode ? "bg-gray-800/70 border-0" : "bg-white/70 border-0"
+                   darkMode
+                     ? "bg-gray-800/70 border-0 shadow-lg shadow-gray-900/20"
+                     : "bg-white/70 border-0 shadow-lg shadow-gray-300/20"
                  }`}
-              style={{
-                boxShadow: darkMode
-                  ? "0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.07)"
-                  : "0 10px 30px -10px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05)",
-                height: "fit-content", // Prevent stretching
-              }}
             >
-              {/* Card inner content with isolated hover effect */}
+              {/* Card inner content */}
               <div className="relative w-full transition-all duration-700 ease-in-out">
                 {/* Popular badge with enhanced animation */}
                 {category.popular && (
@@ -272,10 +267,10 @@ const JobsCategoryBrowse = () => {
                   Jobs Available
                 </p>
 
-                {/* View Jobs button inside the card with fixed height container */}
-                <div className="h-8 mt-4 overflow-hidden flex justify-center items-center">
+                {/* View Jobs button with fixed height to prevent card stretching */}
+                <div className="h-10 mt-4 flex justify-center items-center">
                   <button
-                    className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-500 opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 ${
+                    className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-500 opacity-0 group-hover:opacity-100 ${
                       darkMode
                         ? "bg-gray-700 text-purple-300 hover:bg-purple-700 hover:text-white"
                         : "bg-gray-100 text-primary hover:bg-primary hover:text-white"
@@ -291,13 +286,18 @@ const JobsCategoryBrowse = () => {
 
         <div className="text-center mt-14">
           <button
-            className={`font-medium py-3.5 px-12 rounded-full transition-all duration-500 hover:scale-105 hover:-translate-y-1 transform-gpu ${
+            className={`font-medium py-3.5 px-12 rounded-full relative overflow-hidden group ${
               darkMode
-                ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-xl hover:shadow-purple-500/30"
-                : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-xl hover:shadow-primary/30"
+                ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+                : "bg-gradient-to-r from-primary to-blue-600 text-white"
             }`}
           >
-            View All Categories
+            <span className="relative z-10">View All Categories</span>
+            <span
+              className={`absolute inset-0 w-0 h-full transition-all duration-300 ease-out ${
+                darkMode ? "bg-indigo-500" : "bg-blue-500"
+              } left-0 group-hover:w-full`}
+            ></span>
           </button>
         </div>
       </div>

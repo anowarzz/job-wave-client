@@ -1,13 +1,16 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../pages/shared/Navbar";
 import Footer from "../pages/shared/Footer";
+import Navbar from "../pages/shared/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="max-w-7xl mx-auto font-rubik">
-      <Navbar />
-      <Outlet> </Outlet>
-      <Footer />
+    <div className="min-h-screen font-rubik">
+   
+      <div className="max-w-7xl mx-auto">
+        <Navbar />
+        <Outlet> </Outlet>
+        <Footer />
+      </div>
     </div>
   );
 };
