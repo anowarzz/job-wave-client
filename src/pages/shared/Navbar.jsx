@@ -30,8 +30,8 @@ const Navbar = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "text-primary font-bold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-              : "text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              ? "text-primary dark:text-purple-400 font-bold"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
           }
         >
           Home
@@ -42,8 +42,8 @@ const Navbar = () => {
           to="/jobs"
           className={({ isActive }) =>
             isActive
-              ? "text-primary font-bold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-              : "text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              ? "text-primary dark:text-purple-400 font-bold"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
           }
         >
           Find Jobs
@@ -54,8 +54,8 @@ const Navbar = () => {
           to="/companies"
           className={({ isActive }) =>
             isActive
-              ? "text-primary font-bold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-              : "text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              ? "text-primary dark:text-purple-400 font-bold"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
           }
         >
           Companies
@@ -66,8 +66,8 @@ const Navbar = () => {
           to="/about"
           className={({ isActive }) =>
             isActive
-              ? "text-primary font-bold relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-              : "text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              ? "text-primary dark:text-purple-400 font-bold"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
           }
         >
           About Us
@@ -86,11 +86,11 @@ const Navbar = () => {
               <FaBriefcase className="text-lg" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full"></div>
             </div>
-            <div className="text-lg font-bold whitespace-nowrap">
+            <div className="text-xl font-bold whitespace-nowrap">
               <span className="bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
                 Job
               </span>
-              <span className="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-primary to-blue-500 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent drop-shadow-sm">
                 Wave
               </span>
             </div>

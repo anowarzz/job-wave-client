@@ -4,17 +4,21 @@ import team2Img from "../../assets/team/team2.jpg";
 
 const Banner = () => {
   return (
-    <div className="relative overflow-hidden min-h-[500px] flex items-center">
-      {/* Banner background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-950 z-0"></div>
+    <div className="relative overflow-hidden min-h-[85vh] md:min-h-[80vh] lg:min-h-[85vh] flex items-center">
+      {/* Banner background gradient - modified for light mode */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-950 z-0"></div>
 
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-10 bg-grid-pattern z-0"></div>
 
       <div className="container mx-auto px-4 py-12 z-10">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16">
-          {/* Image section - kept unchanged as requested */}
-          <div className="flex-1 flex flex-col justify-center items-center">
+          {/* Image section with added background gradients */}
+          <div className="flex-1 flex flex-col justify-center items-center relative">
+            {/* Background gradient elements for images */}
+            <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-blue-400/30 to-purple-500/30 dark:from-blue-600/20 dark:to-purple-700/20 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-teal-400/20 dark:from-indigo-700/20 dark:to-teal-600/20 rounded-full blur-3xl -z-10"></div>
+
             <motion.img
               src={team1Img}
               animate={{ y: [20, 60, 20] }}
