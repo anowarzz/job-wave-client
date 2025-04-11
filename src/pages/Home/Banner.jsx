@@ -39,7 +39,7 @@ const Banner = () => {
                 ease: "easeInOut",
                 repeat: Infinity,
               }}
-              className="sm:max-w-sm w-64 rounded-t-[35px] rounded-br-[35px] border-l-4 border-b-4 border-amber-900 shadow-2xl"
+              className="hidden md:block md:max-w-sm w-64 rounded-t-[35px] rounded-br-[35px] border-l-4 border-b-4 border-amber-900 shadow-2xl"
               alt="Team celebrating image"
             />
           </div>
