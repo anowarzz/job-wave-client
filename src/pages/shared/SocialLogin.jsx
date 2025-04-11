@@ -42,18 +42,23 @@ const SocialLogin = ({ setError }) => {
       <button
         onClick={handleGoogleSignIn}
         disabled={googleLoading}
-        className={`relative flex items-center justify-center w-full px-4 py-3 text-sm font-medium transition duration-300 border rounded-md ${
+        className={`relative flex items-center justify-center w-full px-4 py-3 text-sm font-medium transition-all duration-300 border rounded-md overflow-hidden group ${
           isDarkMode
             ? "bg-gray-700 border-gray-600 text-white hover:bg-gray-600"
             : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+        } transform hover:-translate-y-0.5 hover:shadow-md ${
+          isDarkMode ? "hover:shadow-blue-500/20" : "hover:shadow-blue-500/30"
         }`}
       >
+        {/* Animated shine effect on hover */}
+        <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-32 group-hover:h-32 opacity-10"></span>
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 48 48"
           width="20px"
           height="20px"
-          className="mr-2"
+          className="mr-2 transition-transform duration-300 group-hover:scale-110"
         >
           <path
             fill="#FFC107"
@@ -72,7 +77,9 @@ const SocialLogin = ({ setError }) => {
             d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
           />
         </svg>
-        {googleLoading ? "Signing in..." : "Sign in with Google"}
+        <span className="relative z-10">
+          {googleLoading ? "Signing in..." : "Sign in with Google"}
+        </span>
       </button>
     </div>
   );

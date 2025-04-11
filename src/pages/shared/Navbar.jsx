@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FaBriefcase, FaMoon, FaSun } from "react-icons/fa";
+import { FaBriefcase, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import AuthContext from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
@@ -115,18 +115,38 @@ const Navbar = () => {
           </button>
 
           {user ? (
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
+              {/* Logout Button with rich materialistic color */}
+              <button
+                onClick={handleSignOutUser}
+                className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 ${
+                  isDarkMode
+                    ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md shadow-purple-900/30 hover:shadow-lg hover:shadow-purple-800/40 hover:bg-gradient-to-r hover:from-purple-700 hover:to-indigo-700"
+                    : "bg-gradient-to-r from-primary to-blue-500 text-white border-0 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:bg-gradient-to-r hover:from-primary hover:to-blue-600"
+                }`}
+              >
+                Logout
+              </button>
+
               {/* Profile/Avatar */}
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
-                  className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary transition-all duration-300 hover:shadow-md hover:shadow-primary/30 cursor-pointer"
+                  className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary transition-all duration-300 hover:shadow-md hover:shadow-primary/30 cursor-pointer flex items-center justify-center"
                 >
-                  <img
-                    src={user?.photoURL}
-                    alt={user?.displayName}
-                    className="w-full h-full object-cover"
-                  />
+                  {user?.photoURL ? (
+                    <img
+                      src={user?.photoURL}
+                      alt={user?.displayName}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <FaUserCircle
+                      className={`text-2xl ${
+                        isDarkMode ? "text-purple-400" : "text-primary"
+                      }`}
+                    />
+                  )}
                 </div>
                 <ul
                   tabIndex={0}
@@ -162,16 +182,6 @@ const Navbar = () => {
                     >
                       Applied Jobs
                     </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleSignOutUser}
-                      className={`hover:${
-                        isDarkMode ? "bg-gray-700" : "bg-gray-100"
-                      }`}
-                    >
-                      Logout
-                    </button>
                   </li>
                 </ul>
               </div>
