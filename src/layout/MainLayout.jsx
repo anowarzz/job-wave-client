@@ -4,8 +4,7 @@ import Navbar from "../pages/shared/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen font-rubik">
-   
+    <div className="min-h-screen w-full bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <Navbar />
         <Outlet> </Outlet>

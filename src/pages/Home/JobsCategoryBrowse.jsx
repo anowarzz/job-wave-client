@@ -162,27 +162,20 @@ const JobsCategoryBrowse = () => {
       {/* Main content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
-          <h6
-            className={`font-medium text-lg mb-2 ${
-              darkMode ? "text-purple-400" : "text-primary"
-            }`}
-          >
-            Browse By Category
-          </h6>
           <h2
             className={`text-4xl font-bold mb-4 ${
               darkMode ? "text-white" : "text-gray-800"
             } transition-colors bg-gradient-to-r ${
               darkMode
                 ? "from-white via-purple-100 to-white"
-                : "from-gray-800 via-primary to-gray-800"
+                : "from-gray-400 via-amber-700 to-gray-400"
             } bg-clip-text text-transparent`}
           >
             Find Jobs in Popular Categories
           </h2>
           <p
             className={`max-w-2xl mx-auto ${
-              darkMode ? "text-gray-300" : "text-gray-600"
+              darkMode ? "text-gray-300" : "text-gray-200"
             } transition-colors`}
           >
             Browse job opportunities by categories and find the perfect role
@@ -198,8 +191,8 @@ const JobsCategoryBrowse = () => {
                  group cursor-pointer z-10 backdrop-blur-sm backdrop-saturate-150
                  hover:z-20 relative ${
                    darkMode
-                     ? "bg-gray-800/70 border-0 shadow-lg shadow-gray-900/20"
-                     : "bg-white/70 border-0 shadow-lg shadow-gray-300/20"
+                     ? "bg-gray-800 border border-gray-700 shadow-lg shadow-gray-900/30"
+                     : "bg-white/70 border border-gray-100 shadow-lg shadow-gray-300/20"
                  }`}
             >
               {/* Card inner content */}

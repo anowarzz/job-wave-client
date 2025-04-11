@@ -13,15 +13,19 @@ const HotJobsCard = ({ job, darkMode }) => {
       group cursor-pointer hover:shadow-xl relative overflow-hidden
       ${
         darkMode
-          ? "bg-gray-800/80 border-0 shadow-lg shadow-gray-900/20 hover:shadow-gray-900/30"
-          : "bg-white/80 border-0 shadow-md shadow-gray-300/20 hover:shadow-gray-300/30"
+          ? "bg-gray-800/70 border-0 shadow-lg shadow-gray-900/30 hover:shadow-gray-900/40 backdrop-blur-sm"
+          : "bg-white/80 border-0 shadow-md shadow-gray-300/20 hover:shadow-gray-300/30 backdrop-blur-sm"
       }`}
     >
-      {/* Featured badge */}
+      {/* Featured badge with improved styling */}
       {job.featured && (
         <div
           className={`absolute top-0 right-0 px-3 py-1.5 text-xs font-semibold 
-          ${darkMode ? "bg-purple-600 text-white" : "bg-primary text-white"}`}
+          ${
+            darkMode
+              ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
+              : "bg-gradient-to-r from-primary to-blue-600 text-white"
+          }`}
           style={{
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%)",
           }}

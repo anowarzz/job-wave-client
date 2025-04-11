@@ -122,18 +122,18 @@ const HotJobs = () => {
 
   return (
     <div className="relative py-16 overflow-hidden">
-      {/* Background with light pattern */}
+      {/* Background with improved dark mode pattern */}
       <div
         className={`absolute inset-0 ${
           darkMode ? "bg-gray-900/95" : "bg-gray-50/90"
         }`}
       >
-        <div className="absolute inset-0 opacity-10 bg-grid-pattern"></div>
+        <div className="absolute inset-0 opacity-10 dark:opacity-5 bg-grid-pattern"></div>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 bg-gradient-to-br from-primary to-blue-500 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 bg-gradient-to-tr from-purple-500 to-pink-500 blur-3xl"></div>
+      {/* Decorative elements with enhanced dark mode styling */}
+      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">

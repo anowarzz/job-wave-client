@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FaBriefcase, FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import AuthContext from "../../context/AuthContext/AuthContext";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
-  const [darkMode, setDarkMode] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   // SignOut a user
   const handleSignOutUser = () => {
@@ -16,11 +17,6 @@ const Navbar = () => {
       .catch((error) => {
         console.log("Error signing out:", error);
       });
-  };
-
-  const handleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
   };
 
   const links = (
@@ -106,12 +102,12 @@ const Navbar = () => {
         <div className="flex ml-auto items-center gap-2 md:gap-3">
           {/* Theme toggle button with improved hover effect */}
           <button
-            onClick={handleDarkMode}
+            onClick={toggleTheme}
             className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 transition-all duration-300
               hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-md hover:shadow-gray-400/20 dark:hover:shadow-gray-900/30"
             aria-label="Toggle theme"
           >
-            {darkMode ? (
+            {isDarkMode ? (
               <FaSun className="text-yellow-400 text-sm" />
             ) : (
               <FaMoon className="text-sm" />
@@ -166,17 +162,17 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* Mobile menu toggle */}
+          {/* Mobile menu toggle with improved dark mode visibility */}
           <div className="md:hidden">
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-sm p-1"
+                className="btn btn-ghost btn-sm p-1 hover:bg-gray-700/50"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-5 w-5 text-gray-700 dark:text-gray-200"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
