@@ -27,7 +27,8 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-primary dark:text-purple-400 font-bold"
-              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300" +
+                (!isDarkMode ? " hover:border-b-2 hover:border-primary" : "")
           }
         >
           Home
@@ -39,7 +40,8 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-primary dark:text-purple-400 font-bold"
-              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300" +
+                (!isDarkMode ? " hover:border-b-2 hover:border-primary" : "")
           }
         >
           Find Jobs
@@ -51,7 +53,8 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-primary dark:text-purple-400 font-bold"
-              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300" +
+                (!isDarkMode ? " hover:border-b-2 hover:border-primary" : "")
           }
         >
           Companies
@@ -63,7 +66,8 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-primary dark:text-purple-400 font-bold"
-              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300" +
+                (!isDarkMode ? " hover:border-b-2 hover:border-primary" : "")
           }
         >
           About Us
@@ -116,13 +120,17 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center gap-3">
-              {/* Logout Button with rich materialistic color */}
+              {/* Logout Button with smoother transition */}
               <button
                 onClick={handleSignOutUser}
-                className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-300 transform hover:-translate-y-0.5 ${
+                className={`px-3 py-1.5 text-sm rounded-lg ${
                   isDarkMode
-                    ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md shadow-purple-900/30 hover:shadow-lg hover:shadow-purple-800/40 hover:bg-gradient-to-r hover:from-purple-700 hover:to-indigo-700"
-                    : "bg-gradient-to-r from-primary to-blue-500 text-white border-0 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 hover:bg-gradient-to-r hover:from-primary hover:to-blue-600"
+                    ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-0 shadow-md shadow-purple-900/30"
+                    : "bg-gradient-to-r from-primary to-blue-500 text-white border-0 shadow-md shadow-primary/20"
+                } transition-all duration-200 ease-out hover:shadow-lg ${
+                  isDarkMode
+                    ? "hover:shadow-purple-800/40 hover:bg-gradient-to-r hover:from-purple-700 hover:to-indigo-700"
+                    : "hover:shadow-primary/30 hover:bg-gradient-to-r hover:from-primary hover:to-blue-600"
                 }`}
               >
                 Logout
@@ -189,12 +197,12 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link to="/signIn">
-                <button className="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 text-sm rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-primary/30 transform hover:-translate-y-0.5">
+                <button className="bg-primary text-white px-3 py-1.5 text-sm rounded-lg transition-all duration-200 ease-out hover:bg-yellow-900 hover:shadow-md hover:shadow-primary/30">
                   Sign In
                 </button>
               </Link>
               <Link to="/register" className="hidden sm:block">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 text-sm rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-blue-500/30 transform hover:-translate-y-0.5">
+                <button className="bg-blue-500 text-white px-3 py-1.5 text-sm rounded-lg transition-all duration-200 ease-out hover:bg-blue-600 hover:shadow-md hover:shadow-blue-500/30">
                   Register
                 </button>
               </Link>
