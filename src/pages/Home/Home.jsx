@@ -1,4 +1,5 @@
 import Banner from "./Banner";
+import HotJobs from "./HotJobs";
 import JobsCategoryBrowse from "./JobsCategoryBrowse";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <Banner />
       <JobsCategoryBrowse />
+      <HotJobs />
     </div>
   );
 };
