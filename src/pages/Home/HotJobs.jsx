@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaFire } from "react-icons/fa";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import HotJobsCard from "./HotJobsCard";
 
 const HotJobs = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { isDarkMode } = useTheme();
   const [jobs] = useState([
     {
       id: 1,
@@ -91,41 +92,12 @@ const HotJobs = () => {
     },
   ]);
 
-  useEffect(() => {
-    const isDarkMode =
-      localStorage.getItem("darkMode") === "true" ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setDarkMode(isDarkMode);
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e) => {
-      setDarkMode(e.matches);
-    };
-
-    // Watch for dark mode changes
-    const checkDarkMode = () => {
-      const htmlElement = document.documentElement;
-      const isDark = htmlElement.classList.contains("dark");
-      setDarkMode(isDark);
-    };
-
-    // Set up an interval to check for dark mode changes
-    const interval = setInterval(checkDarkMode, 1000);
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-      clearInterval(interval);
-    };
-  }, []);
-
   return (
     <div className="relative py-16 overflow-hidden">
       {/* Background with improved dark mode pattern */}
       <div
         className={`absolute inset-0 ${
-          darkMode ? "bg-gray-900/95" : "bg-gray-50/90"
+          isDarkMode ? "bg-gray-900/95" : "bg-gray-50/90"
         }`}
       >
         <div className="absolute inset-0 opacity-10 dark:opacity-5 bg-grid-pattern"></div>
@@ -141,23 +113,23 @@ const HotJobs = () => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <div
               className={`p-2 rounded-lg ${
-                darkMode ? "bg-purple-600/20" : "bg-primary/20"
+                isDarkMode ? "bg-purple-600/20" : "bg-primary/20"
               }`}
             >
               <FaFire
                 className={`text-xl ${
-                  darkMode ? "text-purple-400" : "text-primary"
+                  isDarkMode ? "text-purple-400" : "text-primary"
                 }`}
               />
             </div>
             <h2
               className={`text-4xl font-bold ${
-                darkMode ? "text-white" : "text-gray-800"
+                isDarkMode ? "text-white" : "text-gray-800"
               } transition-colors`}
             >
               Hot Jobs{" "}
               <span
-                className={`${darkMode ? "text-purple-400" : "text-primary"}`}
+                className={`${isDarkMode ? "text-purple-400" : "text-primary"}`}
               >
                 Today
               </span>
@@ -165,7 +137,7 @@ const HotJobs = () => {
           </div>
           <p
             className={`max-w-2xl mx-auto ${
-              darkMode ? "text-gray-300" : "text-gray-600"
+              isDarkMode ? "text-gray-300" : "text-gray-600"
             } transition-colors`}
           >
             Discover the most sought-after positions currently available. These
@@ -176,7 +148,7 @@ const HotJobs = () => {
         {/* Jobs grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {jobs.map((job) => (
-            <HotJobsCard key={job.id} job={job} darkMode={darkMode} />
+            <HotJobsCard key={job.id} job={job} />
           ))}
         </div>
 
@@ -184,7 +156,7 @@ const HotJobs = () => {
         <div className="text-center mt-12">
           <button
             className={`font-medium py-3 px-10 rounded-full transition-all duration-300 ${
-              darkMode
+              isDarkMode
                 ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-purple-500/30"
                 : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-lg hover:shadow-primary/30"
             }`}

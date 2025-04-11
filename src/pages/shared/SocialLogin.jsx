@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext/AuthContext";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const SocialLogin = ({ setError }) => {
   const { signInWithGoogle, googleLoading } = useContext(AuthContext);
+  const { isDarkMode } = useTheme();
   const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
@@ -36,18 +38,22 @@ const SocialLogin = ({ setError }) => {
   };
 
   return (
-    <div className="mt-2">
-      <div className="divider">OR</div>
+    <div className="grid grid-cols-1 gap-3">
       <button
         onClick={handleGoogleSignIn}
         disabled={googleLoading}
-        className="flex items-center justify-center w-full p-3 border border-gray-300 rounded-md shadow-sm hover:bg-gray-700 transition duration-300"
+        className={`relative flex items-center justify-center w-full px-4 py-3 text-sm font-medium transition duration-300 border rounded-md ${
+          isDarkMode
+            ? "bg-gray-700 border-gray-600 text-white hover:bg-gray-600"
+            : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+        }`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 48 48"
-          width="24px"
-          height="24px"
+          width="20px"
+          height="20px"
+          className="mr-2"
         >
           <path
             fill="#FFC107"
@@ -66,9 +72,7 @@ const SocialLogin = ({ setError }) => {
             d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
           />
         </svg>
-        <span className="ml-3 font-medium">
-          {googleLoading ? "Signing in..." : "Continue with Google"}
-        </span>
+        {googleLoading ? "Signing in..." : "Sign in with Google"}
       </button>
     </div>
   );

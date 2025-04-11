@@ -5,14 +5,17 @@ import {
   FaMapMarkerAlt,
   FaRegBookmark,
 } from "react-icons/fa";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
-const HotJobsCard = ({ job, darkMode }) => {
+const HotJobsCard = ({ job }) => {
+  const { isDarkMode } = useTheme();
+
   return (
     <div
       className={`p-6 rounded-xl transition-all duration-300 
       group cursor-pointer hover:shadow-xl relative overflow-hidden
       ${
-        darkMode
+        isDarkMode
           ? "bg-gray-800/70 border-0 shadow-lg shadow-gray-900/30 hover:shadow-gray-900/40 backdrop-blur-sm"
           : "bg-white/80 border-0 shadow-md shadow-gray-300/20 hover:shadow-gray-300/30 backdrop-blur-sm"
       }`}
@@ -22,7 +25,7 @@ const HotJobsCard = ({ job, darkMode }) => {
         <div
           className={`absolute top-0 right-0 px-3 py-1.5 text-xs font-semibold 
           ${
-            darkMode
+            isDarkMode
               ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white"
               : "bg-gradient-to-r from-primary to-blue-600 text-white"
           }`}
@@ -40,7 +43,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <div className="flex items-center">
             <div
               className={`w-12 h-12 rounded-md flex items-center justify-center mr-3 
-              ${darkMode ? "bg-gray-700" : "bg-gray-100"}`}
+              ${isDarkMode ? "bg-gray-700" : "bg-gray-100"}`}
             >
               {job.companyLogo ? (
                 <img
@@ -51,7 +54,7 @@ const HotJobsCard = ({ job, darkMode }) => {
               ) : (
                 <FaBuilding
                   className={`text-xl ${
-                    darkMode ? "text-gray-400" : "text-gray-500"
+                    isDarkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 />
               )}
@@ -59,7 +62,7 @@ const HotJobsCard = ({ job, darkMode }) => {
             <div>
               <h3
                 className={`font-semibold text-lg mb-1 ${
-                  darkMode ? "text-white" : "text-gray-800"
+                  isDarkMode ? "text-white" : "text-gray-800"
                 }`}
               >
                 {job.title}
@@ -67,7 +70,7 @@ const HotJobsCard = ({ job, darkMode }) => {
               <div className="flex items-center">
                 <span
                   className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-500"
+                    isDarkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
                   {job.company}
@@ -78,7 +81,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <button
             className={`p-2 rounded-full transition-all duration-300
             ${
-              darkMode
+              isDarkMode
                 ? "text-gray-400 hover:text-purple-400 hover:bg-gray-700"
                 : "text-gray-500 hover:text-primary hover:bg-gray-100"
             }`}
@@ -95,7 +98,7 @@ const HotJobsCard = ({ job, darkMode }) => {
                 key={index}
                 className={`text-xs font-medium px-2 py-1 rounded-md
                   ${
-                    darkMode
+                    isDarkMode
                       ? "bg-purple-900/50 text-purple-300 border border-purple-700/50"
                       : "bg-primary/10 text-primary border border-primary/30"
                   }`}
@@ -111,7 +114,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <div
             className={`flex items-center text-sm px-3 py-1 rounded-full
             ${
-              darkMode
+              isDarkMode
                 ? "bg-gray-700 text-gray-300"
                 : "bg-gray-100 text-gray-600"
             }`}
@@ -122,7 +125,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <div
             className={`flex items-center text-sm px-3 py-1 rounded-full
             ${
-              darkMode
+              isDarkMode
                 ? "bg-gray-700 text-gray-300"
                 : "bg-gray-100 text-gray-600"
             }`}
@@ -133,7 +136,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <div
             className={`flex items-center text-sm px-3 py-1 rounded-full
             ${
-              darkMode
+              isDarkMode
                 ? "bg-gray-700 text-gray-300"
                 : "bg-gray-100 text-gray-600"
             }`}
@@ -146,7 +149,7 @@ const HotJobsCard = ({ job, darkMode }) => {
         {/* Job description */}
         <p
           className={`text-sm mb-5 flex-grow ${
-            darkMode ? "text-gray-400" : "text-gray-500"
+            isDarkMode ? "text-gray-400" : "text-gray-500"
           }`}
         >
           {job.description}
@@ -156,7 +159,7 @@ const HotJobsCard = ({ job, darkMode }) => {
         <div className="flex justify-between items-center mt-auto">
           <div
             className={`text-sm ${
-              darkMode ? "text-gray-400" : "text-gray-500"
+              isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}
           >
             {job.postedTime}
@@ -164,7 +167,7 @@ const HotJobsCard = ({ job, darkMode }) => {
           <button
             className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-300
             ${
-              darkMode
+              isDarkMode
                 ? "bg-purple-600 text-white hover:bg-purple-700"
                 : "bg-primary text-white hover:bg-primary/90"
             }`}
