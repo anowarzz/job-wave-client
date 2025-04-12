@@ -150,8 +150,11 @@ const HotJobsCard = ({ job }) => {
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-            {/* <FaDollarSign className="mr-1 text-xs" /> */}
-            {job?.salaryRange ? formatSalary(job?.salaryRange) : "Negotiable"}
+        
+            <span className="mr-1 text-xs">
+              {job?.salaryRange ? formatSalary(job?.salaryRange) : "Salary"}
+            </span>
+            
           </div>
         </div>
 
