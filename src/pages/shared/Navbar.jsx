@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { FaBriefcase, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-import AuthContext from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const Navbar = () => {
-  const { user, signOutUser } = useContext(AuthContext);
+  const { user, signOutUser } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
 
   // SignOut a user

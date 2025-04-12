@@ -1,13 +1,13 @@
 import Lottie from "lottie-react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import loginLottieData from "../../assets/lottie/login.json";
-import AuthContext from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import SocialLogin from "../shared/SocialLogin";
 
 const SignIn = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser } = useAuth();
   const { isDarkMode } = useTheme();
   const [error, setError] = useState("");
 

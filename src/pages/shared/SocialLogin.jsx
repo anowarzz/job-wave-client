@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext/AuthContext";
+import { useAuth } from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const SocialLogin = ({ setError }) => {
-  const { signInWithGoogle, googleLoading } = useContext(AuthContext);
+  const { signInWithGoogle, googleLoading } = useAuth();
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
 
