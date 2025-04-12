@@ -7,6 +7,7 @@ import {
   FaCalendarAlt,
   FaCloudDownloadAlt,
   FaCoins,
+  FaEnvelope,
   FaGraduationCap,
   FaMapMarkerAlt,
   FaPaperPlane,
@@ -22,6 +23,11 @@ const JobDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { isDarkMode } = useTheme();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -483,6 +489,90 @@ const JobDetails = () => {
                   </ul>
                 </motion.div>
               )}
+
+              {/* HR Contact Information */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="mb-8"
+              >
+                <h3
+                  className={`text-xl font-semibold mb-4 flex items-center gap-2 ${
+                    isDarkMode ? "text-white" : "text-gray-800"
+                  }`}
+                >
+                  <FaEnvelope
+                    className={isDarkMode ? "text-purple-400" : "text-primary"}
+                  />
+                  HR Contact Information
+                </h3>
+                <div
+                  className={`p-5 rounded-lg border ${
+                    isDarkMode
+                      ? "bg-gray-700/30 border-gray-700 text-gray-300"
+                      : "bg-gray-50 border-gray-200 text-gray-600"
+                  }`}
+                >
+                  <p className="mb-2">
+                    <span className="font-medium">Contact Person:</span>{" "}
+                    {job?.hr_name || "HR Department"}
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-medium">Email:</span>{" "}
+                    <a
+                      href={`mailto:${
+                        job?.hr_email ||
+                        "hr@" +
+                          job?.company?.toLowerCase().replace(/\s+/g, "") +
+                          ".com"
+                      }`}
+                      className={`underline transition hover:${
+                        isDarkMode ? "text-purple-400" : "text-primary"
+                      }`}
+                    >
+                      {job?.hr_email ||
+                        `hr@${job?.company
+                          ?.toLowerCase()
+                          .replace(/\s+/g, "")}.com`}
+                    </a>
+                  </p>
+                  <div
+                    className={`text-sm mt-3 ${
+                      isDarkMode ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    <p className="italic">
+                      Please mention the job reference number ({id}) in your
+                      application.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Personal note to applicants - relatable content */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                className={`mb-8 p-5 rounded-lg border-l-4 ${
+                  isDarkMode
+                    ? "bg-gray-700/20 border-purple-500 text-gray-300"
+                    : "bg-amber-50 border-primary text-gray-700"
+                }`}
+              >
+                <h4
+                  className={`font-semibold mb-2 ${
+                    isDarkMode ? "text-gray-100" : "text-gray-800"
+                  }`}
+                >
+                  A Note From Our Team
+                </h4>
+                <p className="mb-2">
+                  We understand job hunting can be stressful! We review every
+                  application and will get back to you within 7 working days.
+                </p>
+              </motion.div>
             </div>
           </div>
 
@@ -531,7 +621,7 @@ const JobDetails = () => {
                     isDarkMode
                       ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
                       : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
-                  } transition-all duration-300`}
+                  }`}
                 >
                   <FaCloudDownloadAlt /> Save Job
                 </motion.button>
@@ -561,10 +651,10 @@ const JobDetails = () => {
           </p>
           <Link to="/jobs">
             <button
-              className={`font-medium py-3 px-8 rounded-full transition-all duration-300 ${
+              className={`font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 ${
                 isDarkMode
-                  ? "bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700"
-                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-gray-800 text-gray-200 border border-gray-700 hover:bg-gray-700 hover:text-white hover:shadow-lg hover:shadow-purple-900/20"
+                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:text-primary hover:border-primary hover:shadow-lg hover:shadow-primary/20"
               }`}
             >
               Browse All Jobs
