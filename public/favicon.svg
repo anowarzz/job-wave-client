@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rectangle with rounded corners - using a lighter background to make icon more visible -->
+  <rect x="56" y="56" width="400" height="400" rx="60" ry="60" fill="#F8FAFC" /> <!-- Very light gray/blue -->
+  
+  <!-- Briefcase icon (centered and scaled to be larger) -->
+  <g transform="translate(80, 80) scale(0.7)">
+    <path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z" 
+          fill="#000000" /> <!-- Using black for maximum contrast -->
+  </g>
+  
+  <!-- Yellow dot in the top-right corner for brand recognition -->
+  <circle cx="400" cy="90" r="30" fill="#F59E0B" /> <!-- amber-500 -->
+</svg>

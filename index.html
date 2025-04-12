@@ -2,17 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/favicon.png"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Job Wave</title>
-<script>
+    <title>JobWave - Find Your Dream Job</title>
+    <script>
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
       document.documentElement.classList.toggle(
         "dark",
         localStorage.theme === "dark" ||
-          (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
       );
-    </script>    
+    </script>
   </head>
   <body>
     <div id="root"></div>

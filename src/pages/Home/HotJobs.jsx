@@ -1,111 +1,158 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { FaFire } from "react-icons/fa";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { FaBriefcase, FaFire } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import HotJobsCard from "./HotJobsCard";
-import { useEffect } from "react";
 
 const HotJobs = () => {
   const { isDarkMode } = useTheme();
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    fetch("http://localhost:5000/jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        setJobs(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching jobs:", err);
+        setLoading(false);
+      });
+  }, []);
 
+  // Loading skeletons for hot jobs
+  const LoadingUI = () => (
+    <div className="w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className={`rounded-xl overflow-hidden ${
+              isDarkMode
+                ? "bg-gray-800/50 border border-gray-700"
+                : "bg-white border border-gray-100"
+            } shadow-lg transition-all duration-300 h-[320px]`}
+          >
+            <div className="p-5 h-full">
+              {/* Company logo skeleton */}
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className={`w-12 h-12 rounded-lg animate-pulse ${
+                    isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                  }`}
+                ></div>
+                <div className="flex-1">
+                  <div
+                    className={`h-4 w-3/4 mb-2 rounded animate-pulse ${
+                      isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                    }`}
+                  ></div>
+                  <div
+                    className={`h-3 w-1/2 rounded animate-pulse ${
+                      isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                    }`}
+                  ></div>
+                </div>
+              </div>
 
-useEffect(() => {
-fetch("http://localhost:5000/jobs")
-.then(res => res.json())
-.then(data => setJobs(data))
-.catch(err => console.error("Error fetching jobs:", err));  
+              {/* Job title skeleton */}
+              <div
+                className={`h-6 w-full mb-4 rounded animate-pulse ${
+                  isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                }`}
+              ></div>
 
-}, [])
+              {/* Tags skeleton */}
+              <div className="flex flex-wrap gap-2 mb-5">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-7 w-16 rounded-full animate-pulse ${
+                      isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                    }`}
+                    style={{ animationDelay: `${i * 150}ms` }}
+                  ></div>
+                ))}
+              </div>
 
+              {/* Description skeleton */}
+              <div className="space-y-2">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-3 rounded animate-pulse ${
+                      isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                    }`}
+                    style={{
+                      width: `${85 - i * 15}%`,
+                      animationDelay: `${i * 200}ms`,
+                    }}
+                  ></div>
+                ))}
+              </div>
 
-  const [localJobs] = useState([
-    {
-      id: 1,
-      title: "Senior UI/UX Designer",
-      company: "Figma Design Inc.",
-      location: "San Francisco, CA",
-      type: "Full-time",
-      salary: "$70K-$90K",
-      description:
-        "We're looking for an experienced UI/UX designer to create amazing user experiences for our products. You'll work with a team of talented designers and developers.",
-      postedTime: "Posted 2 days ago",
-      featured: true,
-      companyLogo: "https://i.ibb.co/xqrFHr4/figma.png",
-      skills: ["Figma", "Adobe XD", "UI Design", "Prototyping"],
-    },
-    {
-      id: 2,
-      title: "Frontend React Developer",
-      company: "TechFlow Solutions",
-      location: "Remote",
-      type: "Full-time",
-      salary: "$65K-$85K",
-      description:
-        "Join our engineering team to build modern web applications using React, Redux, and other cutting-edge technologies. You'll work on exciting projects with global impact.",
-      postedTime: "Posted 3 days ago",
-      featured: true,
-      companyLogo: "https://i.ibb.co/mFh3kJZ/tech-flow.png",
-      skills: ["React", "TypeScript", "Redux", "Tailwind CSS"],
-    },
-    {
-      id: 3,
-      title: "Full Stack Engineer",
-      company: "InnovateHub",
-      location: "New York, NY",
-      type: "Full-time",
-      salary: "$90K-$120K",
-      description:
-        "We're seeking a skilled full-stack developer to join our growing team. You'll be responsible for developing and maintaining web applications from front to back.",
-      postedTime: "Posted 1 week ago",
-      featured: false,
-      companyLogo: "https://i.ibb.co/YQjkqBL/innovate.png",
-      skills: ["Node.js", "React", "MongoDB", "AWS"],
-    },
-    {
-      id: 4,
-      title: "Product Manager",
-      company: "Gradient Ventures",
-      location: "Boston, MA",
-      type: "Full-time",
-      salary: "$85K-$110K",
-      description:
-        "We're looking for a product manager to lead our product development efforts. You'll work closely with design, engineering, and marketing teams to deliver exceptional products.",
-      postedTime: "Posted 5 days ago",
-      featured: false,
-      companyLogo: "https://i.ibb.co/VScLWTB/gradient.png",
-      skills: ["Agile", "Product Strategy", "Roadmapping", "User Research"],
-    },
-    {
-      id: 5,
-      title: "DevOps Engineer",
-      company: "CloudNative Systems",
-      location: "Chicago, IL",
-      type: "Full-time",
-      salary: "$80K-$100K",
-      description:
-        "Join our team to build and maintain our cloud infrastructure. You'll work with technologies like AWS, Docker, Kubernetes, and CI/CD pipelines to ensure smooth operations.",
-      postedTime: "Posted 2 weeks ago",
-      featured: true,
-      companyLogo: "https://i.ibb.co/kmCsVJp/cloud.png",
-      skills: ["Kubernetes", "Docker", "AWS", "CI/CD"],
-    },
-    {
-      id: 6,
-      title: "Marketing Specialist",
-      company: "GrowthFuel Marketing",
-      location: "Austin, TX",
-      type: "Full-time",
-      salary: "$60K-$75K",
-      description:
-        "We're looking for a creative marketing specialist to help drive our campaigns. You'll work with our marketing team to develop and execute strategies for our clients.",
-      postedTime: "Posted 1 week ago",
-      featured: false,
-      companyLogo: "https://i.ibb.co/q9Vkv2d/growth.png",
-      skills: ["SEO", "Content Marketing", "Social Media", "Analytics"],
-    },
-  ]);
+              {/* Button skeleton */}
+              <div className="mt-6 flex justify-end">
+                <div
+                  className={`h-9 w-28 rounded-full animate-pulse ${
+                    isDarkMode ? "bg-purple-700/40" : "bg-primary/30"
+                  }`}
+                ></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Floating briefcase animation during loading
+  const LoadingAnimation = () => (
+    <div className="flex justify-center items-center my-12">
+      <div className="relative">
+        <motion.div
+          animate={{
+            y: [0, -15, 0],
+            rotate: [0, 5, 0, -5, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className={`w-16 h-16 rounded-lg flex items-center justify-center ${
+            isDarkMode
+              ? "bg-gradient-to-br from-purple-600 to-indigo-700"
+              : "bg-gradient-to-br from-primary to-blue-500"
+          }`}
+        >
+          <FaBriefcase className="text-white text-2xl" />
+        </motion.div>
+
+        {/* Decorative dots */}
+        <motion.div
+          animate={{ scale: [1, 1.5, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+            isDarkMode ? "bg-purple-400" : "bg-yellow-400"
+          }`}
+        ></motion.div>
+
+        {/* Shadow underneath */}
+        <motion.div
+          animate={{ scale: [1, 0.8, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className={`absolute -bottom-4 left-1/2 -translate-x-1/2 w-12 h-2 rounded-full ${
+            isDarkMode ? "bg-purple-800" : "bg-primary/50"
+          } blur-sm`}
+        ></motion.div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="relative py-16 overflow-hidden">
@@ -161,11 +208,18 @@ fetch("http://localhost:5000/jobs")
         </div>
 
         {/* Jobs grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {jobs?.map((job) => (
-            <HotJobsCard key={job?._id} job={job} />
-          ))}
-        </div>
+        {loading ? (
+          <>
+            <LoadingAnimation />
+            <LoadingUI />
+          </>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {jobs?.map((job) => (
+              <HotJobsCard key={job?._id} job={job} />
+            ))}
+          </div>
+        )}
 
         {/* View all jobs button */}
         <div className="text-center mt-12">
