@@ -5,6 +5,7 @@ import {
   FaRegBookmark,
 } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import { Link } from "react-router-dom";
 
 const HotJobsCard = ({ job }) => {
   const { isDarkMode } = useTheme();
@@ -150,11 +151,9 @@ const HotJobsCard = ({ job }) => {
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-        
             <span className="mr-1 text-xs">
               {job?.salaryRange ? formatSalary(job?.salaryRange) : "Salary"}
             </span>
-            
           </div>
         </div>
 
@@ -174,22 +173,25 @@ const HotJobsCard = ({ job }) => {
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}
           >
-            {job?.applicationDeadline
+            {/* {job?.applicationDeadline
               ? `Deadline: ${new Date(
                   job?.applicationDeadline
                 ).toLocaleDateString()}`
-              : "Open until filled"}
+              : "Open until filled"} */}
+            {job?.postedTime}
           </div>
-          <button
-            className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-300
+          <Link to={`/jobs/${job?._id}`}>
+            <button
+              className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-300
             ${
               isDarkMode
                 ? "bg-purple-600 text-white hover:bg-purple-700"
                 : "bg-primary text-white hover:bg-primary/90"
             }`}
-          >
-            Apply Now
-          </button>
+            >
+              Apply Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>

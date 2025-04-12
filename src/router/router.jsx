@@ -3,12 +3,15 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
 import SignIn from "../pages/SignIn/SignIn";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import JobDetails from "../pages/JobDetails/JobDetails";
+import ErrorElement from "../pages/ErrorElement/ErrorElement";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement: <h2>Route Not Found</h2>,
+    errorElement: <ErrorElement />,
     children: [
       {
         path: "/",
@@ -22,6 +25,14 @@ const router = createBrowserRouter([
         path: "/signIn",
         element: <SignIn> </SignIn>,
       },
+      {
+        path: "/about-us",
+        element: <AboutUs></AboutUs>,
+      },
+      {
+        path: "/jobs/:id",
+        element: <JobDetails></JobDetails>
+      }
     ],
   },
 ]);
