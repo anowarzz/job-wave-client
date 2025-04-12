@@ -1,7 +1,6 @@
 import {
   FaBuilding,
   FaClock,
-  FaDollarSign,
   FaMapMarkerAlt,
   FaRegBookmark,
 } from "react-icons/fa";
@@ -9,6 +8,16 @@ import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const HotJobsCard = ({ job }) => {
   const { isDarkMode } = useTheme();
+
+  // Format salary range
+  const formatSalary = (salaryRange) => {
+    if (!salaryRange) return "Negotiable";
+
+    const { min, max, currency } = salaryRange;
+    const currencySymbol = currency === "usd" ? "$" : "৳";
+
+    return `${currencySymbol} ${min?.toLocaleString()} - ${max?.toLocaleString()}`;
+  };
 
   return (
     <div
@@ -21,7 +30,7 @@ const HotJobsCard = ({ job }) => {
       }`}
     >
       {/* Featured badge with improved styling */}
-      {job.featured && (
+      {job?.featured && (
         <div
           className={`absolute top-0 right-0 px-3 py-1.5 text-xs font-semibold 
           ${
@@ -45,10 +54,10 @@ const HotJobsCard = ({ job }) => {
               className={`w-12 h-12 rounded-md flex items-center justify-center mr-3 
               ${isDarkMode ? "bg-gray-700" : "bg-gray-100"}`}
             >
-              {job.companyLogo ? (
+              {job?.company_logo ? (
                 <img
-                  src={job.companyLogo}
-                  alt={job.company}
+                  src={job?.company_logo}
+                  alt={job?.company || "Company"}
                   className="w-8 h-8 object-contain"
                 />
               ) : (
@@ -65,7 +74,7 @@ const HotJobsCard = ({ job }) => {
                   isDarkMode ? "text-white" : "text-gray-800"
                 }`}
               >
-                {job.title}
+                {job?.title || "Job Title"}
               </h3>
               <div className="flex items-center">
                 <span
@@ -73,7 +82,7 @@ const HotJobsCard = ({ job }) => {
                     isDarkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  {job.company}
+                  {job?.company || "Company Name"}
                 </span>
               </div>
             </div>
@@ -91,9 +100,9 @@ const HotJobsCard = ({ job }) => {
         </div>
 
         {/* Key skills badges */}
-        {job.skills && job.skills.length > 0 && (
+        {job?.requirements && job?.requirements?.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
-            {job.skills.map((skill, index) => (
+            {job?.requirements?.map((skill, index) => (
               <div
                 key={index}
                 className={`text-xs font-medium px-2 py-1 rounded-md
@@ -120,7 +129,7 @@ const HotJobsCard = ({ job }) => {
             }`}
           >
             <FaMapMarkerAlt className="mr-1 text-xs" />
-            {job.location}
+            {job?.location || "Location"}
           </div>
           <div
             className={`flex items-center text-sm px-3 py-1 rounded-full
@@ -131,7 +140,7 @@ const HotJobsCard = ({ job }) => {
             }`}
           >
             <FaClock className="mr-1 text-xs" />
-            {job.type}
+            {job?.jobType || "Job Type"}
           </div>
           <div
             className={`flex items-center text-sm px-3 py-1 rounded-full
@@ -141,8 +150,8 @@ const HotJobsCard = ({ job }) => {
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-            <FaDollarSign className="mr-1 text-xs" />
-            {job.salary}
+            {/* <FaDollarSign className="mr-1 text-xs" /> */}
+            {job?.salaryRange ? formatSalary(job?.salaryRange) : "Negotiable"}
           </div>
         </div>
 
@@ -152,7 +161,7 @@ const HotJobsCard = ({ job }) => {
             isDarkMode ? "text-gray-400" : "text-gray-500"
           }`}
         >
-          {job.description}
+          {job?.description || "No description available"}
         </p>
 
         {/* Footer with apply button */}
@@ -162,7 +171,11 @@ const HotJobsCard = ({ job }) => {
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}
           >
-            {job.postedTime}
+            {job?.applicationDeadline
+              ? `Deadline: ${new Date(
+                  job?.applicationDeadline
+                ).toLocaleDateString()}`
+              : "Open until filled"}
           </div>
           <button
             className={`text-sm font-medium py-1.5 px-4 rounded-full transition-all duration-300

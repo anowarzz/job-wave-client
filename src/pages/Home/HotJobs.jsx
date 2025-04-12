@@ -1,11 +1,26 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import HotJobsCard from "./HotJobsCard";
+import { useEffect } from "react";
 
 const HotJobs = () => {
   const { isDarkMode } = useTheme();
-  const [jobs] = useState([
+
+const [jobs, setJobs] = useState([]);
+
+
+useEffect(() => {
+fetch("http://localhost:5000/jobs")
+.then(res => res.json())
+.then(data => setJobs(data))
+.catch(err => console.error("Error fetching jobs:", err));  
+
+}, [])
+
+
+  const [localJobs] = useState([
     {
       id: 1,
       title: "Senior UI/UX Designer",
@@ -147,7 +162,7 @@ const HotJobs = () => {
 
         {/* Jobs grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {jobs.map((job) => (
+          {jobs?.map((job) => (
             <HotJobsCard key={job.id} job={job} />
           ))}
         </div>
