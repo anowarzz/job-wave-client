@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import ErrorElement from "../pages/ErrorElement/ErrorElement";
 import Home from "../pages/Home/Home";
+import JobDetails from "../pages/JobDetails/JobDetails";
 import Register from "../pages/Register/Register";
 import SignIn from "../pages/SignIn/SignIn";
-import AboutUs from "../pages/AboutUs/AboutUs";
-import JobDetails from "../pages/JobDetails/JobDetails";
-import ErrorElement from "../pages/ErrorElement/ErrorElement";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +31,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/jobs/:id",
-        element: <JobDetails></JobDetails>
-      }
+        element: <JobDetails></JobDetails>,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              `http://localhost:5000/jobs/${params.id}`
+            );
+            if (!response.ok) {
+              throw new Error(
+                `Failed to fetch job: ${response.status} ${response.statusText}`
+              );
+            }
+            return await response.json();
+          } catch (error) {
+            console.error("Error loading job details:", error);
+            throw error; // This will trigger the ErrorElement
+          }
+        },
+      },
     ],
   },
 ]);

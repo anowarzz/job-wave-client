@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   FaArrowLeft,
   FaBriefcase,
@@ -14,43 +14,27 @@ import {
   FaRegBookmark,
   FaUsers,
 } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useNavigation,
+  useParams,
+} from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const JobDetails = () => {
   const { id } = useParams();
-  const [job, setJob] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const job = useLoaderData(); // Get data directly from the router loader
+  const navigation = useNavigation(); // Get navigation state from React Router
   const { isDarkMode } = useTheme();
+
+  // Loading state
+  const loading = navigation.state === "loading";
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    const fetchJobDetails = async () => {
-      try {
-        setLoading(true);
-        // Fetch job data from API based on ID
-        const response = await fetch(`http://localhost:5000/jobs/${id}`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch job details");
-        }
-
-        const data = await response.json();
-        setJob(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchJobDetails();
-  }, [id]);
 
   // Format salary range
   const formatSalary = (salaryRange) => {
@@ -93,35 +77,6 @@ const JobDetails = () => {
           <div className="mt-5 text-sm text-gray-500 dark:text-gray-400">
             Loading job details...
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div
-        className={`min-h-screen flex items-center justify-center ${
-          isDarkMode ? "bg-gray-900" : "bg-gray-50"
-        }`}
-      >
-        <div className="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-lg max-w-md">
-          <div className="text-red-500 dark:text-red-400 text-4xl mb-3">❌</div>
-          <h3 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-2">
-            Error Loading Job
-          </h3>
-          <p className="text-red-600/70 dark:text-red-300/70 mb-4">{error}</p>
-          <Link
-            to="/"
-            className={`inline-block px-4 py-2 rounded-full text-white ${
-              isDarkMode
-                ? "bg-purple-600 hover:bg-purple-700"
-                : "bg-primary hover:bg-primary/90"
-            } transition-colors`}
-          >
-            Back to Home
-          </Link>
         </div>
       </div>
     );
