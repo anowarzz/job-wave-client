@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import { FaBriefcase, FaFire } from "react-icons/fa";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import { useState } from "react";
+import useTheme from "../../hooks/useTheme";
 import HotJobsCard from "./HotJobsCard";
+import { useEffect } from "react";
+import { FaBriefcase, FaFire } from "react-icons/fa";
 
 const HotJobs = () => {
   const { isDarkMode } = useTheme();

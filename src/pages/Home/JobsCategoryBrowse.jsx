@@ -9,7 +9,7 @@ import {
   FaPaintBrush,
   FaShoppingBag,
 } from "react-icons/fa";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useTheme from "../../hooks/useTheme";
 
 const JobsCategoryBrowse = () => {
   const { isDarkMode } = useTheme();
@@ -146,10 +146,10 @@ const JobsCategoryBrowse = () => {
           <h2
             className={`text-4xl font-bold mb-4 
              transition-colors bg-gradient-to-r ${
-              isDarkMode
-                ? "from-gray-200 via-amber-800 to-gray-300"
-                : "from-blue-500  to-indigo-500"
-            } bg-clip-text text-transparent`}
+               isDarkMode
+                 ? "from-gray-200 via-amber-800 to-gray-300"
+                 : "from-blue-500  to-indigo-500"
+             } bg-clip-text text-transparent`}
           >
             Find Jobs in Popular Categories
           </h2>

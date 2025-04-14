@@ -14,7 +14,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useTheme from "../../hooks/useTheme";
 
 const JobApply = () => {
   const { id } = useParams();

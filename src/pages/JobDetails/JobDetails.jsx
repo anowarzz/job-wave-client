@@ -18,17 +18,38 @@ import {
   Link,
   useLoaderData,
   useNavigation,
-  useParams
+  useParams,
 } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useTheme from "../../hooks/useTheme";
 
 const JobDetails = () => {
   const { id } = useParams();
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
   const { isDarkMode } = useTheme();
 
   // Destructure job data for easier access throughout the component
-  const { title, company, company_logo, postedTime, location, jobType, type, salaryRange, salary, experience, deadline, description, requirements, skills, educationalRequirements, responsibilities, benefits, hr_name, hr_email, featured } = useLoaderData() || {} ;
+  const {
+    title,
+    company,
+    company_logo,
+    postedTime,
+    location,
+    jobType,
+    type,
+    salaryRange,
+    salary,
+    experience,
+    deadline,
+    description,
+    requirements,
+    skills,
+    educationalRequirements,
+    responsibilities,
+    benefits,
+    hr_name,
+    hr_email,
+    featured,
+  } = useLoaderData() || {};
 
   // Loading state
   const loading = navigation.state === "loading";

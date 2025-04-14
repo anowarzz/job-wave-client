@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import auth from "../../firebase/firebase.init";
-import { AuthContext } from "./AuthContext";
+import  AuthContext  from "./AuthContext";
 
 // Creating a Google auth provider
 const googleProvider = new GoogleAuthProvider();
@@ -79,6 +79,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currenUser) => {
       setUser(currenUser);
+      setLoading(false); // Set loading to false after auth state is determined
       console.log("Current user:", currenUser);
     });
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import useAuth  from "../../context/AuthContext/AuthContext";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useAuth from "../../hooks/useAuth";
+import useTheme from "../../hooks/useTheme";
 
 const SocialLogin = ({ setError }) => {
   const { signInWithGoogle, googleLoading } = useAuth();

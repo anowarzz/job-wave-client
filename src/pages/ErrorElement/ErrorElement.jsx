@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { FaArrowLeft, FaBriefcase, FaHome, FaSearch } from "react-icons/fa";
 import { Link, useRouteError } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useTheme from "../../hooks/useTheme";
 
 const ErrorElement = () => {
   const error = useRouteError();

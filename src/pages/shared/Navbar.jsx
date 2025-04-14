@@ -1,7 +1,7 @@
 import { FaBriefcase, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-import useAuth from "../../context/AuthContext/AuthContext";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useAuth from "../../hooks/useAuth";
+import useTheme from "../../hooks/useTheme";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();

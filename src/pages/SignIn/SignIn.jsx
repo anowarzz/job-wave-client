@@ -2,8 +2,8 @@ import Lottie from "lottie-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginLottieData from "../../assets/lottie/login.json";
-import useAuth from "../../context/AuthContext/AuthContext";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useAuth from "../../hooks/useAuth";
+import useTheme from "../../hooks/useTheme";
 import SocialLogin from "../shared/SocialLogin";
 
 const SignIn = () => {
@@ -236,6 +236,5 @@ const SignIn = () => {
     </div>
   );
 };
-
 
 export default SignIn;

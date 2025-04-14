@@ -1,15 +1,15 @@
 import {
   FaBriefcase,
   FaEnvelope,
-  FaFacebook,
+  FaFacebookF,
   FaInstagram,
-  FaLinkedin,
+  FaLinkedinIn,
   FaMapMarkerAlt,
-  FaPhone,
+  FaPhoneAlt,
   FaTwitter,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import useTheme from "../../hooks/useTheme";
 
 const Footer = () => {
   const { isDarkMode } = useTheme();
@@ -72,7 +72,7 @@ const Footer = () => {
                     : "bg-gray-200 text-gray-600 hover:bg-primary hover:text-white"
                 }`}
               >
-                <FaFacebook size={14} />
+                <FaFacebookF size={14} />
               </a>
               <a
                 href="#"
@@ -82,7 +82,7 @@ const Footer = () => {
                     : "bg-gray-200 text-gray-600 hover:bg-primary hover:text-white"
                 }`}
               >
-                <FaLinkedin size={14} />
+                <FaLinkedinIn size={14} />
               </a>
               <a
                 href="#"
@@ -270,7 +270,7 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <FaPhone
+                <FaPhoneAlt
                   className={isDarkMode ? "text-purple-400" : "text-primary"}
                 />
                 <a

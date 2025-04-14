@@ -1,11 +1,8 @@
-import {
-  FaBuilding,
-  FaClock,
-  FaMapMarkerAlt,
-  FaRegBookmark,
-} from "react-icons/fa";
-import { useTheme } from "../../context/ThemeContext/ThemeContext";
+import { BsClock } from "react-icons/bs";
+import { FaBookmark, FaBriefcase, FaMapMarkerAlt } from "react-icons/fa";
+import { MdAttachMoney } from "react-icons/md";
 import { Link } from "react-router-dom";
+import useTheme from "../../hooks/useTheme";
 
 const HotJobsCard = ({ job }) => {
   const { isDarkMode } = useTheme();
@@ -62,7 +59,7 @@ const HotJobsCard = ({ job }) => {
                   className="w-8 h-8 object-contain"
                 />
               ) : (
-                <FaBuilding
+                <FaBriefcase
                   className={`text-xl ${
                     isDarkMode ? "text-gray-400" : "text-gray-500"
                   }`}
@@ -96,7 +93,7 @@ const HotJobsCard = ({ job }) => {
                 : "text-gray-500 hover:text-primary hover:bg-gray-100"
             }`}
           >
-            <FaRegBookmark />
+            <FaBookmark />
           </button>
         </div>
 
@@ -140,7 +137,7 @@ const HotJobsCard = ({ job }) => {
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-            <FaClock className="mr-1 text-xs" />
+            <BsClock className="mr-1 text-xs" />
             {job?.jobType || "Job Type"}
           </div>
           <div
@@ -151,9 +148,8 @@ const HotJobsCard = ({ job }) => {
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-            <span className="mr-1 text-xs">
-              {job?.salaryRange ? formatSalary(job?.salaryRange) : "Salary"}
-            </span>
+            <MdAttachMoney className="mr-1 text-xs" />
+            {job?.salaryRange ? formatSalary(job?.salaryRange) : "Salary"}
           </div>
         </div>
 
