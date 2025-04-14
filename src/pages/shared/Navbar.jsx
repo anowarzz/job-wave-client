@@ -1,6 +1,6 @@
 import { FaBriefcase, FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext/AuthContext";
+import useAuth from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const Navbar = () => {

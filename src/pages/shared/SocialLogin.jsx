@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext/AuthContext";
+import useAuth  from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const SocialLogin = ({ setError }) => {

@@ -2,7 +2,7 @@ import Lottie from "lottie-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import registerLottieData from "../../assets/lottie/register.json";
-import { useAuth } from "../../context/AuthContext/AuthContext";
+import  useAuth  from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import SocialLogin from "../shared/SocialLogin";
 
