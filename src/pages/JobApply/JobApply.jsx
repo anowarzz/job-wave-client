@@ -11,13 +11,14 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import useTheme from "../../hooks/useTheme";
-
 const JobApply = () => {
   const { id } = useParams();
   const job = useLoaderData();
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Generate skills based only on job requirements
   const generateSkillOptions = () => {
@@ -165,7 +166,57 @@ const JobApply = () => {
       return;
     }
 
-    // setIsSubmitting(true);
+    const jobApplication = {
+      job_id: id,
+      applicant_email: user.email,
+      job_title: title,
+      company_name: company,
+      company_logo,
+      location,
+      jobType: jobType || type,
+      application_date: new Date(),
+      deadline,
+      education: formData.education,
+      experience: formData.experience,
+      skills: formData.selectedSkills,
+      cover_letter: formData.coverLetter,
+      resume_url: formData.resumeUrl,
+      github_url: formData.githubUrl,
+      linkedin_url: formData.linkedinUrl,
+      status: "pending",
+    };
+
+    setIsSubmitting(true);
+
+    // Submit application to backend
+    fetch("http://localhost:5000/job-applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(jobApplication),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to submit application");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Set success state to true after successful submission
+        setSubmitSuccess(true);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error submitting application:", error);
+        // Handle submission error (optional)
+        setErrors({
+          submission: "Failed to submit application. Please try again.",
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   // Scroll to top when component mounts
