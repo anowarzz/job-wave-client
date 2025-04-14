@@ -1,8 +1,8 @@
 import Lottie from "lottie-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginLottieData from "../../assets/lottie/login.json";
-import  useAuth  from "../../context/AuthContext/AuthContext";
+import useAuth from "../../context/AuthContext/AuthContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import SocialLogin from "../shared/SocialLogin";
 
@@ -10,6 +10,10 @@ const SignIn = () => {
   const { signInUser } = useAuth();
   const { isDarkMode } = useTheme();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location signin", location);
+  const from = location.state?.from?.pathname || location.state || "/";
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -34,7 +38,7 @@ const SignIn = () => {
       .then((result) => {
         const user = result.user;
         console.log("User signed in successfully:", user);
-
+        navigate(from, { replace: true }); //
         // Clear the form after successful login
         form.reset();
       })
@@ -232,5 +236,6 @@ const SignIn = () => {
     </div>
   );
 };
+
 
 export default SignIn;
