@@ -8,14 +8,14 @@ import {
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import auth from "../../firebase/firebase.init";
-  import {AuthContext} from "./AuthContext";
+import { AuthContext } from "./AuthContext";
 
 // Creating a Google auth provider
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [googleLoading, setGoogleLoading] = useState(false);
 
   // Create a new user with email and password

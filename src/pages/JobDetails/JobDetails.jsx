@@ -18,15 +18,17 @@ import {
   Link,
   useLoaderData,
   useNavigation,
-  useParams,
+  useParams
 } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 
 const JobDetails = () => {
   const { id } = useParams();
-  const job = useLoaderData(); // Get data directly from the router loader
-  const navigation = useNavigation(); // Get navigation state from React Router
+  const navigation = useNavigation(); 
   const { isDarkMode } = useTheme();
+
+  // Destructure job data for easier access throughout the component
+  const { title, company, company_logo, postedTime, location, jobType, type, salaryRange, salary, experience, deadline, description, requirements, skills, educationalRequirements, responsibilities, benefits, hr_name, hr_email, featured } = useLoaderData() || {} ;
 
   // Loading state
   const loading = navigation.state === "loading";
@@ -132,7 +134,7 @@ const JobDetails = () => {
             ></div>
 
             {/* Featured badge if applicable */}
-            {job?.featured && (
+            {featured && (
               <div
                 className={`absolute top-2 right-4 px-3 py-1.5 text-xs font-semibold text-white ${
                   isDarkMode
@@ -158,7 +160,7 @@ const JobDetails = () => {
                     isDarkMode ? "text-white" : "text-gray-800"
                   }`}
                 >
-                  {job?.title || "Job Title"}
+                  {title || "Job Title"}
                 </motion.h1>
                 <button
                   className={`p-2.5 rounded-full transition-all duration-300 ${
@@ -184,10 +186,10 @@ const JobDetails = () => {
                     isDarkMode ? "bg-gray-700" : "bg-gray-100"
                   }`}
                 >
-                  {job?.company_logo ? (
+                  {company_logo ? (
                     <img
-                      src={job.company_logo}
-                      alt={job?.company}
+                      src={company_logo}
+                      alt={company}
                       className="w-12 h-12 object-contain"
                     />
                   ) : (
@@ -204,14 +206,14 @@ const JobDetails = () => {
                       isDarkMode ? "text-gray-200" : "text-gray-700"
                     }`}
                   >
-                    {job?.company || "Company Name"}
+                    {company || "Company Name"}
                   </h2>
                   <p
                     className={`text-sm ${
                       isDarkMode ? "text-gray-400" : "text-gray-500"
                     }`}
                   >
-                    {job?.postedTime || "Posted recently"}
+                    {postedTime || "Posted recently"}
                   </p>
                 </div>
               </motion.div>
@@ -233,7 +235,7 @@ const JobDetails = () => {
                   <FaMapMarkerAlt
                     className={isDarkMode ? "text-purple-400" : "text-primary"}
                   />
-                  {job?.location || "Location"}
+                  {location || "Location"}
                 </div>
                 <div
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
@@ -245,7 +247,7 @@ const JobDetails = () => {
                   <FaBriefcase
                     className={isDarkMode ? "text-purple-400" : "text-primary"}
                   />
-                  {job?.jobType || job?.type || "Job Type"}
+                  {jobType || type || "Job Type"}
                 </div>
                 <div
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
@@ -257,11 +259,11 @@ const JobDetails = () => {
                   <FaCoins
                     className={isDarkMode ? "text-purple-400" : "text-primary"}
                   />
-                  {job?.salaryRange
-                    ? formatSalary(job.salaryRange)
-                    : job?.salary || "Salary Negotiable"}
+                  {salaryRange
+                    ? formatSalary(salaryRange)
+                    : salary || "Salary Negotiable"}
                 </div>
-                {job?.experience && (
+                {experience && (
                   <div
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
                       isDarkMode
@@ -274,10 +276,10 @@ const JobDetails = () => {
                         isDarkMode ? "text-purple-400" : "text-primary"
                       }
                     />
-                    {job.experience}
+                    {experience}
                   </div>
                 )}
-                {job?.deadline && (
+                {deadline && (
                   <div
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
                       isDarkMode
@@ -290,7 +292,7 @@ const JobDetails = () => {
                         isDarkMode ? "text-purple-400" : "text-primary"
                       }
                     />
-                    Deadline: {new Date(job.deadline).toLocaleDateString()}
+                    Deadline: {new Date(deadline).toLocaleDateString()}
                   </div>
                 )}
               </motion.div>
@@ -317,12 +319,12 @@ const JobDetails = () => {
                     isDarkMode ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  <p>{job?.description || "No description available."}</p>
+                  <p>{description || "No description available."}</p>
                 </div>
               </motion.div>
 
               {/* Requirements section */}
-              {(job?.requirements || job?.skills) && (
+              {(requirements || skills) && (
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -337,7 +339,7 @@ const JobDetails = () => {
                     Requirements & Skills
                   </h3>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {(job?.requirements || job?.skills)?.map((skill, index) => (
+                    {(requirements || skills)?.map((skill, index) => (
                       <div
                         key={index}
                         className={`text-sm font-medium px-3 py-1.5 rounded-md
@@ -355,7 +357,7 @@ const JobDetails = () => {
               )}
 
               {/* Educational requirements if available */}
-              {job?.educationalRequirements && (
+              {educationalRequirements && (
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -379,13 +381,13 @@ const JobDetails = () => {
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    <p>{job.educationalRequirements}</p>
+                    <p>{educationalRequirements}</p>
                   </div>
                 </motion.div>
               )}
 
               {/* Job responsibilities if available */}
-              {job?.responsibilities && (
+              {responsibilities && (
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -404,19 +406,19 @@ const JobDetails = () => {
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    {Array.isArray(job.responsibilities) ? (
-                      job.responsibilities.map((item, index) => (
+                    {Array.isArray(responsibilities) ? (
+                      responsibilities.map((item, index) => (
                         <li key={index}>{item}</li>
                       ))
                     ) : (
-                      <li>{job.responsibilities}</li>
+                      <li>{responsibilities}</li>
                     )}
                   </ul>
                 </motion.div>
               )}
 
               {/* Benefits if available */}
-              {job?.benefits && (
+              {benefits && (
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -434,12 +436,10 @@ const JobDetails = () => {
                       isDarkMode ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    {Array.isArray(job.benefits) ? (
-                      job.benefits.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))
+                    {Array.isArray(benefits) ? (
+                      benefits.map((item, index) => <li key={index}>{item}</li>)
                     ) : (
-                      <li>{job.benefits}</li>
+                      <li>{benefits}</li>
                     )}
                   </ul>
                 </motion.div>
@@ -471,25 +471,23 @@ const JobDetails = () => {
                 >
                   <p className="mb-2">
                     <span className="font-medium">Contact Person:</span>{" "}
-                    {job?.hr_name || "HR Department"}
+                    {hr_name || "HR Department"}
                   </p>
                   <p className="mb-2">
                     <span className="font-medium">Email:</span>{" "}
                     <a
                       href={`mailto:${
-                        job?.hr_email ||
+                        hr_email ||
                         "hr@" +
-                          job?.company?.toLowerCase().replace(/\s+/g, "") +
+                          company?.toLowerCase().replace(/\s+/g, "") +
                           ".com"
                       }`}
                       className={`underline transition hover:${
                         isDarkMode ? "text-purple-400" : "text-primary"
                       }`}
                     >
-                      {job?.hr_email ||
-                        `hr@${job?.company
-                          ?.toLowerCase()
-                          .replace(/\s+/g, "")}.com`}
+                      {hr_email ||
+                        `hr@${company?.toLowerCase().replace(/\s+/g, "")}.com`}
                     </a>
                   </p>
                   <div
@@ -558,17 +556,19 @@ const JobDetails = () => {
                 </p>
               </div>
               <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm ${
-                    isDarkMode
-                      ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-purple-600/30"
-                      : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-lg hover:shadow-primary/30"
-                  } transition-all duration-300`}
-                >
-                  <FaPaperPlane /> Apply Now
-                </motion.button>
+                <Link to={`/jobApply/${id}`}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm ${
+                      isDarkMode
+                        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-purple-600/30"
+                        : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-lg hover:shadow-primary/30"
+                    } transition-all duration-300`}
+                  >
+                    <FaPaperPlane /> Apply Now
+                  </motion.button>
+                </Link>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
