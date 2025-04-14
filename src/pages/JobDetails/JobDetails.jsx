@@ -111,14 +111,14 @@ const JobDetails = () => {
       <div
         className={`absolute inset-0 ${
           isDarkMode ? "bg-gray-900" : "bg-gray-50"
-        }`}
+        } z-0`}
       >
         <div className="absolute inset-0 opacity-10 dark:opacity-5 bg-grid-pattern"></div>
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl"></div>
+      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl z-0 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl z-0 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Back button */}
@@ -579,15 +579,20 @@ const JobDetails = () => {
               <div className="flex gap-3">
                 <Link to={`/jobApply/${id}`}>
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm ${
-                      isDarkMode
-                        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-purple-600/30"
-                        : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-lg hover:shadow-primary/30"
-                    } transition-all duration-300`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm 
+                      relative overflow-hidden group
+                      ${
+                        isDarkMode
+                          ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:shadow-lg hover:shadow-purple-600/30"
+                          : "bg-gradient-to-r from-primary to-blue-600 text-white hover:shadow-lg hover:shadow-primary/30"
+                      } transition-all duration-300 ease-in-out`}
                   >
-                    <FaPaperPlane /> Apply Now
+                    <span className="relative z-10 flex items-center gap-2">
+                      <FaPaperPlane /> Apply Now
+                    </span>
+                    <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-500 ease-in-out"></span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-500 ease-out"></span>
                   </motion.button>
                 </Link>
                 <motion.button

@@ -6,12 +6,9 @@ import {
   FaBuilding,
   FaCheck,
   FaEnvelope,
-  FaGraduationCap,
   FaLink,
   FaMapMarkerAlt,
   FaPaperPlane,
-  FaPhone,
-  FaUser,
 } from "react-icons/fa";
 import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useTheme from "../../hooks/useTheme";
@@ -48,13 +45,13 @@ const JobApply = () => {
 
   // State for form fields
   const [formData, setFormData] = useState({
-    email: "",
-    phone: "",
     education: "",
     experience: "",
     selectedSkills: [],
     coverLetter: "",
     resumeUrl: "",
+    githubUrl: "",
+    linkedinUrl: "",
   });
 
   // State for form validation
@@ -110,16 +107,6 @@ const JobApply = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    }
-
     if (!formData.education) {
       newErrors.education = "Education level is required";
     }
@@ -128,13 +115,11 @@ const JobApply = () => {
       newErrors.experience = "Experience level is required";
     }
 
-    if (formData.selectedSkills.length === 0) {
-      newErrors.selectedSkills = "Please select at least one skill";
-    }
-
-    if (!formData.coverLetter.trim()) {
-      newErrors.coverLetter = "Cover letter is required";
-    } else if (formData.coverLetter.trim().length < 50) {
+    // Only validate cover letter if it's provided (now optional)
+    if (
+      formData.coverLetter.trim() &&
+      formData.coverLetter.trim().length < 50
+    ) {
       newErrors.coverLetter = "Cover letter should be at least 50 characters";
     }
 
@@ -142,6 +127,16 @@ const JobApply = () => {
       newErrors.resumeUrl = "Resume URL is required";
     } else if (!isValidUrl(formData.resumeUrl)) {
       newErrors.resumeUrl = "Please enter a valid URL";
+    }
+
+    // Validate GitHub URL if provided (optional)
+    if (formData.githubUrl.trim() && !isValidUrl(formData.githubUrl)) {
+      newErrors.githubUrl = "Please enter a valid GitHub URL";
+    }
+
+    // Validate LinkedIn URL if provided (optional)
+    if (formData.linkedinUrl.trim() && !isValidUrl(formData.linkedinUrl)) {
+      newErrors.linkedinUrl = "Please enter a valid LinkedIn URL";
     }
 
     return newErrors;
@@ -170,18 +165,7 @@ const JobApply = () => {
       return;
     }
 
-    setIsSubmitting(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-
-      // Redirect after successful submission
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    }, 1500);
+    // setIsSubmitting(true);
   };
 
   // Scroll to top when component mounts
@@ -253,19 +237,19 @@ const JobApply = () => {
       }`}
     >
       {/* Background with gradient and pattern */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 opacity-10 dark:opacity-5 bg-grid-pattern"></div>
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl"></div>
+      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl z-0 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl z-0 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Back button */}
         <div className="mb-6">
           <Link
-            to={`/jobDetails/${id}`}
+            to={`/jobs/${id}`}
             className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
               isDarkMode
                 ? "text-gray-300 hover:text-purple-400"
@@ -417,59 +401,105 @@ const JobApply = () => {
             </h3>
 
             <form onSubmit={handleSubmit}>
-              {/* Basic Information section */}
+              {/* Skills section - Selectable skills */}
+              <div className="mb-6">
+                <label
+                  className={`block mb-2 text-sm font-medium ${
+                    isDarkMode ? "text-gray-200" : "text-gray-700"
+                  }`}
+                >
+                  Relevant Skills (Optional)
+                </label>
+                <div
+                  className={`p-4 border rounded-lg ${
+                    errors.selectedSkills
+                      ? "border-red-500"
+                      : isDarkMode
+                      ? "border-gray-600 bg-gray-700/50"
+                      : "border-gray-200 bg-gray-50/50"
+                  }`}
+                >
+                  {skillOptions.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {skillOptions.map((skill, index) => (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={() => handleSkillToggle(skill)}
+                          className={`px-3 py-1.5 text-sm rounded-full transition-all ${
+                            formData.selectedSkills.includes(skill)
+                              ? isDarkMode
+                                ? "bg-purple-600 text-white"
+                                : "bg-primary text-white"
+                              : isDarkMode
+                              ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                        >
+                          {skill}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p
+                      className={`text-sm ${
+                        isDarkMode ? "text-gray-400" : "text-gray-500"
+                      }`}
+                    >
+                      No specific skills found for this job. Feel free to
+                      describe your relevant skills in the cover letter.
+                    </p>
+                  )}
+                </div>
+                {errors.selectedSkills ? (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.selectedSkills}
+                  </p>
+                ) : (
+                  <p
+                    className={`mt-1 text-xs italic ${
+                      isDarkMode ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    Click to select skills relevant to this position
+                  </p>
+                )}
+
+                {formData.selectedSkills.length > 0 && (
+                  <div className="mt-2">
+                    <p
+                      className={`text-sm ${
+                        isDarkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      Selected: {formData.selectedSkills.join(", ")}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Application Materials section */}
               <div className="mb-6">
                 <h4
                   className={`text-lg font-medium mb-4 flex items-center gap-2 ${
                     isDarkMode ? "text-gray-200" : "text-gray-700"
                   }`}
                 >
-                  <FaUser
+                  <FaEnvelope
                     className={isDarkMode ? "text-purple-400" : "text-primary"}
                     size={16}
                   />
-                  Basic Information
+                  Application Materials
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 gap-5">
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="resumeUrl"
                       className={`block mb-2 text-sm font-medium ${
                         isDarkMode ? "text-gray-200" : "text-gray-700"
                       }`}
                     >
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg border ${
-                        errors.email
-                          ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                          : isDarkMode
-                          ? "border-gray-600 bg-gray-700 text-white focus:border-purple-500 focus:ring-purple-500"
-                          : "border-gray-200 focus:border-primary focus:ring-primary"
-                      } transition-colors focus:ring-2 outline-none`}
-                      placeholder="Enter your email address"
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="phone"
-                      className={`block mb-2 text-sm font-medium ${
-                        isDarkMode ? "text-gray-200" : "text-gray-700"
-                      }`}
-                    >
-                      Phone Number *
+                      Resume URL *
                     </label>
                     <div className="flex">
                       <span
@@ -479,47 +509,141 @@ const JobApply = () => {
                             : "bg-gray-100 text-gray-500 border-gray-200"
                         }`}
                       >
-                        <FaPhone size={14} />
+                        <FaLink size={14} />
                       </span>
                       <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
+                        type="url"
+                        id="resumeUrl"
+                        name="resumeUrl"
+                        value={formData.resumeUrl}
                         onChange={handleChange}
                         className={`w-full px-4 py-3 rounded-r-lg border ${
-                          errors.phone
+                          errors.resumeUrl
                             ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             : isDarkMode
                             ? "border-gray-600 bg-gray-700 text-white focus:border-purple-500 focus:ring-purple-500"
                             : "border-gray-200 focus:border-primary focus:ring-primary"
                         } transition-colors focus:ring-2 outline-none`}
-                        placeholder="Enter your phone number"
+                        placeholder="https://drive.google.com/your-resume-url"
                       />
                     </div>
-                    {errors.phone && (
+                    {errors.resumeUrl ? (
                       <p className="mt-1 text-sm text-red-500">
-                        {errors.phone}
+                        {errors.resumeUrl}
+                      </p>
+                    ) : (
+                      <p
+                        className={`mt-1 text-xs italic ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        Provide a link to your resume (Google Drive, Dropbox,
+                        etc.)
                       </p>
                     )}
                   </div>
-                </div>
-              </div>
 
-              {/* Education & Experience section */}
-              <div className="mb-6">
-                <h4
-                  className={`text-lg font-medium mb-4 flex items-center gap-2 ${
-                    isDarkMode ? "text-gray-200" : "text-gray-700"
-                  }`}
-                >
-                  <FaGraduationCap
-                    className={isDarkMode ? "text-purple-400" : "text-primary"}
-                    size={16}
-                  />
-                  Education & Experience
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label
+                      htmlFor="githubUrl"
+                      className={`block mb-2 text-sm font-medium ${
+                        isDarkMode ? "text-gray-200" : "text-gray-700"
+                      }`}
+                    >
+                      GitHub URL (Optional)
+                    </label>
+                    <div className="flex">
+                      <span
+                        className={`inline-flex items-center px-3 border border-r-0 rounded-l-lg ${
+                          isDarkMode
+                            ? "bg-gray-700 text-gray-300 border-gray-600"
+                            : "bg-gray-100 text-gray-500 border-gray-200"
+                        }`}
+                      >
+                        <FaLink size={14} />
+                      </span>
+                      <input
+                        type="url"
+                        id="githubUrl"
+                        name="githubUrl"
+                        value={formData.githubUrl}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-r-lg border ${
+                          errors.githubUrl
+                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                            : isDarkMode
+                            ? "border-gray-600 bg-gray-700 text-white focus:border-purple-500 focus:ring-purple-500"
+                            : "border-gray-200 focus:border-primary focus:ring-primary"
+                        } transition-colors focus:ring-2 outline-none`}
+                        placeholder="https://github.com/yourusername"
+                      />
+                    </div>
+                    {errors.githubUrl ? (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.githubUrl}
+                      </p>
+                    ) : (
+                      <p
+                        className={`mt-1 text-xs italic ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        Provide a link to your GitHub profile
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="linkedinUrl"
+                      className={`block mb-2 text-sm font-medium ${
+                        isDarkMode ? "text-gray-200" : "text-gray-700"
+                      }`}
+                    >
+                      LinkedIn URL (Optional)
+                    </label>
+                    <div className="flex">
+                      <span
+                        className={`inline-flex items-center px-3 border border-r-0 rounded-l-lg ${
+                          isDarkMode
+                            ? "bg-gray-700 text-gray-300 border-gray-600"
+                            : "bg-gray-100 text-gray-500 border-gray-200"
+                        }`}
+                      >
+                        <FaLink size={14} />
+                      </span>
+                      <input
+                        type="url"
+                        id="linkedinUrl"
+                        name="linkedinUrl"
+                        value={formData.linkedinUrl}
+                        onChange={handleChange}
+                        className={`w-full px-4 py-3 rounded-r-lg border ${
+                          errors.linkedinUrl
+                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                            : isDarkMode
+                            ? "border-gray-600 bg-gray-700 text-white focus:border-purple-500 focus:ring-purple-500"
+                            : "border-gray-200 focus:border-primary focus:ring-primary"
+                        } transition-colors focus:ring-2 outline-none`}
+                        placeholder="https://linkedin.com/in/yourprofile"
+                      />
+                    </div>
+                    {errors.linkedinUrl ? (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.linkedinUrl}
+                      </p>
+                    ) : (
+                      <p
+                        className={`mt-1 text-xs italic ${
+                          isDarkMode ? "text-gray-400" : "text-gray-500"
+                        }`}
+                      >
+                        Provide a link to your LinkedIn profile
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Education & Experience section moved after URLs */}
                   <div>
                     <label
                       htmlFor="education"
@@ -593,100 +717,8 @@ const JobApply = () => {
                       </p>
                     )}
                   </div>
-                </div>
-              </div>
 
-              {/* Skills section - Selectable skills */}
-              <div className="mb-6">
-                <label
-                  className={`block mb-2 text-sm font-medium ${
-                    isDarkMode ? "text-gray-200" : "text-gray-700"
-                  }`}
-                >
-                  Relevant Skills *
-                </label>
-                <div
-                  className={`p-4 border rounded-lg ${
-                    errors.selectedSkills
-                      ? "border-red-500"
-                      : isDarkMode
-                      ? "border-gray-600 bg-gray-700/50"
-                      : "border-gray-200 bg-gray-50/50"
-                  }`}
-                >
-                  {skillOptions.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {skillOptions.map((skill, index) => (
-                        <button
-                          type="button"
-                          key={index}
-                          onClick={() => handleSkillToggle(skill)}
-                          className={`px-3 py-1.5 text-sm rounded-full transition-all ${
-                            formData.selectedSkills.includes(skill)
-                              ? isDarkMode
-                                ? "bg-purple-600 text-white"
-                                : "bg-primary text-white"
-                              : isDarkMode
-                              ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                          }`}
-                        >
-                          {skill}
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <p
-                      className={`text-sm ${
-                        isDarkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    >
-                      No specific skills found for this job. Please describe
-                      your relevant skills in the cover letter.
-                    </p>
-                  )}
-                </div>
-                {errors.selectedSkills ? (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.selectedSkills}
-                  </p>
-                ) : (
-                  <p
-                    className={`mt-1 text-xs italic ${
-                      isDarkMode ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
-                    Click to select skills relevant to this position
-                  </p>
-                )}
-
-                {formData.selectedSkills.length > 0 && (
-                  <div className="mt-2">
-                    <p
-                      className={`text-sm ${
-                        isDarkMode ? "text-gray-300" : "text-gray-600"
-                      }`}
-                    >
-                      Selected: {formData.selectedSkills.join(", ")}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Application Materials section */}
-              <div className="mb-6">
-                <h4
-                  className={`text-lg font-medium mb-4 flex items-center gap-2 ${
-                    isDarkMode ? "text-gray-200" : "text-gray-700"
-                  }`}
-                >
-                  <FaEnvelope
-                    className={isDarkMode ? "text-purple-400" : "text-primary"}
-                    size={16}
-                  />
-                  Application Materials
-                </h4>
-                <div className="grid grid-cols-1 gap-5">
+                  {/* Cover Letter moved to the end */}
                   <div>
                     <label
                       htmlFor="coverLetter"
@@ -694,7 +726,7 @@ const JobApply = () => {
                         isDarkMode ? "text-gray-200" : "text-gray-700"
                       }`}
                     >
-                      Cover Letter *
+                      Cover Letter (Optional)
                     </label>
                     <textarea
                       id="coverLetter"
@@ -721,58 +753,8 @@ const JobApply = () => {
                           isDarkMode ? "text-gray-400" : "text-gray-500"
                         }`}
                       >
-                        Minimum 50 characters
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="resumeUrl"
-                      className={`block mb-2 text-sm font-medium ${
-                        isDarkMode ? "text-gray-200" : "text-gray-700"
-                      }`}
-                    >
-                      Resume URL *
-                    </label>
-                    <div className="flex">
-                      <span
-                        className={`inline-flex items-center px-3 border border-r-0 rounded-l-lg ${
-                          isDarkMode
-                            ? "bg-gray-700 text-gray-300 border-gray-600"
-                            : "bg-gray-100 text-gray-500 border-gray-200"
-                        }`}
-                      >
-                        <FaLink size={14} />
-                      </span>
-                      <input
-                        type="url"
-                        id="resumeUrl"
-                        name="resumeUrl"
-                        value={formData.resumeUrl}
-                        onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-r-lg border ${
-                          errors.resumeUrl
-                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                            : isDarkMode
-                            ? "border-gray-600 bg-gray-700 text-white focus:border-purple-500 focus:ring-purple-500"
-                            : "border-gray-200 focus:border-primary focus:ring-primary"
-                        } transition-colors focus:ring-2 outline-none`}
-                        placeholder="https://drive.google.com/your-resume-url"
-                      />
-                    </div>
-                    {errors.resumeUrl ? (
-                      <p className="mt-1 text-sm text-red-500">
-                        {errors.resumeUrl}
-                      </p>
-                    ) : (
-                      <p
-                        className={`mt-1 text-xs italic ${
-                          isDarkMode ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
-                        Provide a link to your resume (Google Drive, Dropbox,
-                        etc.)
+                        Share why you're a good fit for this position (minimum
+                        50 characters if provided)
                       </p>
                     )}
                   </div>
