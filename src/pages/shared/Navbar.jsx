@@ -61,6 +61,19 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
+          to="/my-applications"
+          className={({ isActive }) =>
+            isActive
+              ? "text-primary dark:text-purple-400 font-bold"
+              : "text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-purple-400 transition-colors duration-300" +
+                (!isDarkMode ? " hover:border-b-2 hover:border-primary" : "")
+          }
+        >
+          My Applications
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/about-us"
           className={({ isActive }) =>
             isActive
@@ -180,16 +193,6 @@ const Navbar = () => {
                       My Profile
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/applied-jobs"
-                      className={`hover:${
-                        isDarkMode ? "bg-gray-700" : "bg-gray-100"
-                      }`}
-                    >
-                      Applied Jobs
-                    </Link>
-                  </li>
                 </ul>
               </div>
             </div>
@@ -239,17 +242,19 @@ const Navbar = () => {
                     : "bg-white text-gray-700 border border-gray-100"
                 }`}
               >
-                {links}
-                {!user && (
-                  <li className="mt-2">
-                    <Link
-                      to="/register"
-                      className="bg-blue-500 hover:bg-blue-600 text-white justify-center py-2 rounded"
-                    >
-                      Register
-                    </Link>
-                  </li>
-                )}
+                <div className="space-y-3">
+                  {links}
+                  {!user && (
+                    <li className="mt-4">
+                      <Link
+                        to="/register"
+                        className="bg-blue-500 hover:bg-blue-600 text-white justify-center py-2 rounded"
+                      >
+                        Register
+                      </Link>
+                    </li>
+                  )}
+                </div>
               </ul>
             </div>
           </div>

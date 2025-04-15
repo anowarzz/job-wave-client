@@ -122,7 +122,7 @@ const ErrorElement = () => {
             </Link>
           </motion.div>
 
-          {/* Back button */}
+          {/* Back button */} 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -170,12 +170,7 @@ const JobApply = () => {
       job_id: id,
       applicant_email: user.email,
       job_title: title,
-      company_name: company,
-      company_logo,
-      location,
-      jobType: jobType || type,
-      application_date: new Date(),
-      deadline,
+      deadline : deadline,
       education: formData.education,
       experience: formData.experience,
       skills: formData.selectedSkills,
@@ -459,7 +454,7 @@ const JobApply = () => {
                     isDarkMode ? "text-gray-200" : "text-gray-700"
                   }`}
                 >
-                  Relevant Skills (Optional)
+                  Relevant Skills
                 </label>
                 <div
                   className={`p-4 border rounded-lg ${
