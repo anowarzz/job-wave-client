@@ -170,7 +170,7 @@ const JobApply = () => {
       job_id: id,
       applicant_email: user.email,
       job_title: title,
-      deadline : deadline,
+      deadline: deadline,
       education: formData.education,
       experience: formData.experience,
       skills: formData.selectedSkills,
@@ -260,17 +260,30 @@ const JobApply = () => {
             Thank you for applying to {title} at {company}. We'll review your
             application and get back to you soon.
           </p>
-          <Link to="/">
-            <button
-              className={`w-full py-3 rounded-lg font-medium transition-all ${
-                isDarkMode
-                  ? "bg-purple-600 text-white hover:bg-purple-700"
-                  : "bg-primary text-white hover:bg-primary/90"
-              }`}
-            >
-              Back to Home
-            </button>
-          </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Link to="/">
+              <button
+                className={`w-full py-3 rounded-lg font-medium transition-all ${
+                  isDarkMode
+                    ? "bg-gray-700 text-white hover:bg-gray-600"
+                    : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                }`}
+              >
+                Back to Home
+              </button>
+            </Link>
+            <Link to="/my-applications">
+              <button
+                className={`w-full py-3 rounded-lg font-medium transition-all ${
+                  isDarkMode
+                    ? "bg-purple-600 text-white hover:bg-purple-700"
+                    : "bg-primary text-white hover:bg-primary/90"
+                }`}
+              >
+                My Applications
+              </button>
+            </Link>
+          </div>
         </motion.div>
       </div>
     );

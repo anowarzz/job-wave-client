@@ -247,6 +247,44 @@ const MyApplications = () => {
               Browse Jobs
             </Link>
           </div>
+        ) : filteredApplications.length === 0 ? (
+          <div
+            className={`text-center py-12 px-6 rounded-2xl shadow-lg ${
+              isDarkMode ? "bg-gray-800" : "bg-white"
+            }`}
+          >
+            <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
+              <FaBriefcase
+                className={`text-4xl ${
+                  isDarkMode ? "text-gray-700" : "text-gray-400"
+                }`}
+              />
+            </div>
+            <h3
+              className={`text-xl font-bold mb-2 ${
+                isDarkMode ? "text-white" : "text-gray-800"
+              }`}
+            >
+              No {filter} applications
+            </h3>
+            <p
+              className={`mb-5 max-w-md mx-auto ${
+                isDarkMode ? "text-gray-300" : "text-gray-600"
+              }`}
+            >
+              You don't have any applications with "{filter}" status.
+            </p>
+            <button
+              onClick={() => setFilter("all")}
+              className={`px-5 py-2 rounded-lg font-medium ${
+                isDarkMode
+                  ? "bg-purple-600 text-white hover:bg-purple-700"
+                  : "bg-indigo-600 text-white hover:bg-indigo-700"
+              } transition-all`}
+            >
+              Show all applications
+            </button>
+          </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {filteredApplications.map((application) => (
