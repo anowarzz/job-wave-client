@@ -103,16 +103,16 @@ const Banner = () => {
                   delay: 0.3,
                   ease: "easeOut",
                 }}
-                className="text-4xl md:text-5xl font-bold leading-tight"
+                className="text-4xl md:text-5xl font-bold leading-tight whitespace-nowrap"
               >
                 <span className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-gray-100 bg-clip-text text-transparent">
-                  Latest
+                  Unlock
                 </span>{" "}
                 <span className="bg-gradient-to-r from-primary via-blue-500 to-primary dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                  Jobs
+                  Career
                 </span>{" "}
                 <span className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-gray-100 bg-clip-text text-transparent">
-                  For You!
+                  Destiny
                 </span>
               </motion.h1>
 
