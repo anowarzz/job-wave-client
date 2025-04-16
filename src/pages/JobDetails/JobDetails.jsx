@@ -120,7 +120,7 @@ const JobDetails = () => {
       <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-br from-primary to-blue-500 dark:from-purple-600 dark:to-blue-700 blur-3xl z-0 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 rounded-full opacity-10 dark:opacity-5 bg-gradient-to-tr from-purple-500 to-pink-500 dark:from-indigo-700 dark:to-purple-800 blur-3xl z-0 pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 max-w-7xl w-full relative z-10">
         {/* Back button */}
         <div className="mb-6">
           <Link
