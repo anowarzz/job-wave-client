@@ -10,9 +10,12 @@ const Register = () => {
   const { createUser } = useAuth();
   const { isDarkMode } = useTheme();
   const [error, setError] = useState("");
+  const [role, setRole] = useState("applicant"); // Default role is now applicant
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
 
     const form = e.target;
     const email = form.email.value;
@@ -25,6 +28,7 @@ const Register = () => {
     const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailValidation.test(email)) {
       setError("Please enter a valid email address.");
+      setIsLoading(false); // Stop loading on validation error
       return; // Add this to stop further validation
     }
 
@@ -34,6 +38,7 @@ const Register = () => {
       setError(
         "Password must be at least 6 characters long, contain at least one uppercase letter and one number."
       );
+      setIsLoading(false); // Stop loading on validation error
       return;
     }
 
@@ -41,9 +46,71 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log("User registered successfully:", user);
-        // Clear the form after successful registration
-        form.reset();
+
+        // add user info to the mongodb database
+
+        const userInfo = {
+          email: user.email,
+          role: role,
+          uid: user.uid,
+          name: user.displayName || "",
+          status: "active",
+        };
+
+        // Send user info to the database
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              console.log("User registered successfully in db", user);
+              // Clear the form after successful registration only when DB save succeeds
+              form.reset();
+            } else {
+              // Handle case when insertedId is not returned
+              setError("Failed to save user information. Please try again.");
+              // Delete the user from Firebase since DB save failed
+              user
+                .delete()
+                .then(() => {
+                  console.log(
+                    "User deleted from Firebase due to DB save failure"
+                  );
+                })
+                .catch((deleteError) => {
+                  console.error(
+                    "Error deleting user from Firebase:",
+                    deleteError
+                  );
+                });
+            }
+            setIsLoading(false); // Stop loading after database operation completes
+          })
+          .catch((err) => {
+            console.error("Error adding user to database:", err);
+            setError("Failed to save user information. Please try again.");
+
+            // Delete the user from Firebase since DB save failed
+            user
+              .delete()
+              .then(() => {
+                console.log(
+                  "User deleted from Firebase due to DB save failure"
+                );
+              })
+              .catch((deleteError) => {
+                console.error(
+                  "Error deleting user from Firebase:",
+                  deleteError
+                );
+              });
+            setIsLoading(false); // Stop loading on error
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -56,6 +123,7 @@ const Register = () => {
         } else {
           setError("An error occurred during registration. Please try again.");
         }
+        setIsLoading(false); // Stop loading on error
       });
   };
 
@@ -162,6 +230,151 @@ const Register = () => {
                   </p>
                 </div>
 
+                {/* Role Selection */}
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-2 ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    I am registering as
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div
+                      className={`cursor-pointer rounded-lg transition-all duration-200 ${
+                        role === "applicant"
+                          ? isDarkMode
+                            ? "bg-indigo-800 border-2 border-indigo-600"
+                            : "bg-primary/10 border-2 border-primary"
+                          : isDarkMode
+                          ? "bg-gray-700 border border-gray-600 hover:bg-gray-650"
+                          : "bg-white border border-gray-200 hover:bg-gray-50"
+                      }`}
+                      onClick={() => setRole("applicant")}
+                    >
+                      <label
+                        htmlFor="applicant"
+                        className="cursor-pointer flex flex-col items-center justify-center p-2"
+                      >
+                        <div
+                          className={`text-lg mb-0.5 ${
+                            role === "applicant"
+                              ? isDarkMode
+                                ? "text-indigo-300"
+                                : "text-primary"
+                              : isDarkMode
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          }`}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          className={`block text-sm font-medium ${
+                            role === "applicant"
+                              ? isDarkMode
+                                ? "text-white"
+                                : "text-gray-900"
+                              : isDarkMode
+                              ? "text-gray-300"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          Applicant
+                        </span>
+                      </label>
+                      <input
+                        id="applicant"
+                        name="role"
+                        type="radio"
+                        value="applicant"
+                        checked={role === "applicant"}
+                        onChange={(e) => setRole(e.target.value)}
+                        className="sr-only" // Hide the actual radio button
+                      />
+                    </div>
+                    <div
+                      className={`cursor-pointer rounded-lg transition-all duration-200 ${
+                        role === "recruiter"
+                          ? isDarkMode
+                            ? "bg-indigo-800 border-2 border-indigo-600"
+                            : "bg-primary/10 border-2 border-primary"
+                          : isDarkMode
+                          ? "bg-gray-700 border border-gray-600 hover:bg-gray-650"
+                          : "bg-white border border-gray-200 hover:bg-gray-50"
+                      }`}
+                      onClick={() => setRole("recruiter")}
+                    >
+                      <label
+                        htmlFor="recruiter"
+                        className="cursor-pointer flex flex-col items-center justify-center p-2"
+                      >
+                        <div
+                          className={`text-lg mb-0.5 ${
+                            role === "recruiter"
+                              ? isDarkMode
+                                ? "text-indigo-300"
+                                : "text-primary"
+                              : isDarkMode
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          }`}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          className={`block text-sm font-medium ${
+                            role === "recruiter"
+                              ? isDarkMode
+                                ? "text-white"
+                                : "text-gray-900"
+                              : isDarkMode
+                              ? "text-gray-300"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          Recruiter
+                        </span>
+                      </label>
+                      <input
+                        id="recruiter"
+                        name="role"
+                        type="radio"
+                        value="recruiter"
+                        checked={role === "recruiter"}
+                        onChange={(e) => setRole(e.target.value)}
+                        className="sr-only" // Hide the actual radio button
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
                     <Link
@@ -186,13 +399,40 @@ const Register = () => {
                 <div>
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-300 ${
                       isDarkMode
                         ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-gray-900"
                         : "bg-primary hover:bg-primary/90 focus:ring-primary"
-                    }`}
+                    } ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
                   >
-                    Create account
+                    {isLoading ? (
+                      <div className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Creating account...
+                      </div>
+                    ) : (
+                      "Create account"
+                    )}
                   </button>
                 </div>
               </form>
