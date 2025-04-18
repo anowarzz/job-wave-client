@@ -1,6 +1,7 @@
 import Lottie from "lottie-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import registerLottieData from "../../assets/lottie/register.json";
 import useAuth from "../../hooks/useAuth";
 import useTheme from "../../hooks/useTheme";
@@ -10,12 +11,17 @@ const Register = () => {
   const { createUser } = useAuth();
   const { isDarkMode } = useTheme();
   const [error, setError] = useState("");
-  const [role, setRole] = useState("applicant"); // Default role is now applicant
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [role, setRole] = useState("applicant");
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Add navigation and location hooks
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (e) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     const form = e.target;
     const email = form.email.value;
@@ -28,8 +34,8 @@ const Register = () => {
     const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailValidation.test(email)) {
       setError("Please enter a valid email address.");
-      setIsLoading(false); // Stop loading on validation error
-      return; // Add this to stop further validation
+      setIsLoading(false);
+      return;
     }
 
     // Password Validation
@@ -38,7 +44,7 @@ const Register = () => {
       setError(
         "Password must be at least 6 characters long, contain at least one uppercase letter and one number."
       );
-      setIsLoading(false); // Stop loading on validation error
+      setIsLoading(false);
       return;
     }
 
@@ -69,12 +75,14 @@ const Register = () => {
           .then((data) => {
             if (data.insertedId) {
               console.log("User registered successfully in db", user);
-              // Clear the form after successful registration only when DB save succeeds
+              // Clear the form after successful registration
               form.reset();
+
+              // Navigate to the home page or previous page after successful registration
+              navigate(from, { replace: true });
+              toast.success("Registration Complete");
             } else {
-              // Handle case when insertedId is not returned
               setError("Failed to save user information. Please try again.");
-              // Delete the user from Firebase since DB save failed
               user
                 .delete()
                 .then(() => {
@@ -89,13 +97,12 @@ const Register = () => {
                   );
                 });
             }
-            setIsLoading(false); // Stop loading after database operation completes
+            setIsLoading(false);
           })
           .catch((err) => {
             console.error("Error adding user to database:", err);
             setError("Failed to save user information. Please try again.");
 
-            // Delete the user from Firebase since DB save failed
             user
               .delete()
               .then(() => {
@@ -109,13 +116,12 @@ const Register = () => {
                   deleteError
                 );
               });
-            setIsLoading(false); // Stop loading on error
+            setIsLoading(false);
           });
       })
       .catch((error) => {
         console.log(error);
 
-        // Handle specific Firebase errors
         if (error.code === "auth/email-already-in-use") {
           setError("Email is already in use. Please use a different email.");
         } else if (error.code === "auth/weak-password") {
@@ -123,7 +129,7 @@ const Register = () => {
         } else {
           setError("An error occurred during registration. Please try again.");
         }
-        setIsLoading(false); // Stop loading on error
+        setIsLoading(false);
       });
   };
 
@@ -134,7 +140,6 @@ const Register = () => {
       }`}
     >
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Background decorative elements */}
         <div
           className={`absolute -top-32 -right-32 w-96 h-96 rounded-full filter blur-3xl opacity-20 ${
             isDarkMode ? "bg-indigo-700" : "bg-blue-500"
@@ -151,7 +156,6 @@ const Register = () => {
       </div>
 
       <div className="max-w-5xl w-full flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 relative z-10 mx-auto px-4 sm:px-6">
-        {/* Form Section - Now on left side */}
         <div className="w-full max-w-sm lg:w-2/5">
           <div
             className={`rounded-2xl shadow-xl overflow-hidden ${
@@ -230,7 +234,6 @@ const Register = () => {
                   </p>
                 </div>
 
-                {/* Role Selection */}
                 <div>
                   <label
                     className={`block text-sm font-medium mb-2 ${
@@ -303,7 +306,7 @@ const Register = () => {
                         value="applicant"
                         checked={role === "applicant"}
                         onChange={(e) => setRole(e.target.value)}
-                        className="sr-only" // Hide the actual radio button
+                        className="sr-only"
                       />
                     </div>
                     <div
@@ -369,7 +372,7 @@ const Register = () => {
                         value="recruiter"
                         checked={role === "recruiter"}
                         onChange={(e) => setRole(e.target.value)}
-                        className="sr-only" // Hide the actual radio button
+                        className="sr-only"
                       />
                     </div>
                   </div>
@@ -467,7 +470,6 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Lottie Animation - Now on right side */}
         <div className="w-full max-w-sm lg:w-2/5">
           <Lottie animationData={registerLottieData} />
         </div>
