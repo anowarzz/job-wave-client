@@ -9,6 +9,8 @@ import MyApplications from "../pages/MyApplications/MyApplications";
 import Register from "../pages/Register/Register";
 import SignIn from "../pages/SignIn/SignIn";
 import PrivateRoute from "./PrivateRoute";
+import Jobs from "../pages/Jobs/Jobs";
+import Companies from "../pages/Companies/Companies";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: "/signIn",
         element: <SignIn> </SignIn>,
+      },
+      {
+        path: "/jobs",
+        element: <Jobs> </Jobs>,
+      },
+      {
+        path: "/companies",
+        element: <Companies></Companies>,
       },
       {
         path: "/about-us",
