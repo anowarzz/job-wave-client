@@ -19,7 +19,7 @@ const MyApplications = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:5000/job-applications/user?email=${user.email}`
+          `https://job-wave-server-khaki.vercel.app/job-applications/user?email=${user.email}`
         );
 
         if (!response.ok) {

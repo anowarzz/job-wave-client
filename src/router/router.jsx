@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const response = await fetch(
-              `http://localhost:5000/jobs/${params.id}`
+              `https://job-wave-server-khaki.vercel.app/jobs/${params.id}`
             );
             if (!response.ok) {
               throw new Error(
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const response = await fetch(
-              `http://localhost:5000/jobs/${params.id}`
+              `https://job-wave-server-khaki.vercel.app/jobs/${params.id}`
             );
             if (!response.ok) {
               throw new Error(

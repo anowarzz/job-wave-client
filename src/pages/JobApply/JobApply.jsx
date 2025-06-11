@@ -184,7 +184,7 @@ const JobApply = () => {
     setIsSubmitting(true);
 
     // Submit application to backend
-    fetch("http://localhost:5000/job-applications", {
+    fetch("https://job-wave-server-khaki.vercel.app/job-applications", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

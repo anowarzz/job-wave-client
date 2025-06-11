@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaBriefcase, FaFire } from "react-icons/fa";
 import useTheme from "../../hooks/useTheme";
 import HotJobsCard from "./HotJobsCard";
-import { useEffect } from "react";
-import { FaBriefcase, FaFire } from "react-icons/fa";
 
 const HotJobs = () => {
   const { isDarkMode } = useTheme();
@@ -13,7 +12,7 @@ const HotJobs = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/jobs")
+    fetch("https://job-wave-server-khaki.vercel.app/jobs")
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
